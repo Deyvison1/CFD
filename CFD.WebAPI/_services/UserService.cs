@@ -19,19 +19,21 @@ namespace CFD.WebAPI._services
         public UserService(ICFDRepositorio repo, IMapper mapper) { _repo = repo; _map = mapper; }
 
         // Lista Todos
-        public async Task<User[]> GetAllUser()
+        public async Task<UserDto[]> GetAllUser()
         {
             try{
                 var user = await _repo.GetAllUser();
 
-                var result = _map.Map <IEnumerable <User>>(user);
+                var result = _map.Map<UserDto[]>(user);
+                
                 return result.ToArray();
+                
             } catch(System.Exception e) {
                 throw new ArgumentException("Erro no listar todos "+e);
             }
         }
         // Listar por ID
-        public async Task<User> GetUserById(int id)
+        public async Task<UserDto> GetUserById(int id)
         {
             try
             {
@@ -39,7 +41,7 @@ namespace CFD.WebAPI._services
                 if(user == null) throw new ArgumentException("Nenhum registro encontrado");
                 var result = _map.Map<UserDto>(user);
 
-                return user;
+                return result;
 
             } catch 
             {
@@ -48,13 +50,13 @@ namespace CFD.WebAPI._services
 
         }
         // Listar Por Nome ou Email ou Papel
-        public async Task<User[]> GetUserByNomeOrIdOrPapel(string buscar) {
+        public async Task<UserDto[]> GetUserByNomeOrIdOrPapel(string buscar) {
             try {
                 var user = await _repo.GetUserByNomeOrIdOrPapel(buscar);
 
                 var result = _map.Map<UserDto[]>(user);
 
-                return user;
+                return result;
 
 
             } catch(System.Exception e) {
@@ -62,21 +64,19 @@ namespace CFD.WebAPI._services
             }
         }
         // Adicionar
-        public async Task<User> Add(UserDto user)
+        public async Task<UserDto> Add(UserDto user)
         {
             try {
             var emailExiste = await _repo.GetUserByEmailExist(user.Email);
             if (emailExiste != null) throw new ArgumentException("Email ja existe");
 
+            var entidade = _map.Map<User>(user);
 
-            var result = _map.Map<User>(user);
-
-
-            _repo.Add(result);
+            _repo.Add(entidade);
 
             if(await _repo.SaveChanges())
             {
-                return result;
+                return _map.Map<UserDto>(entidade);
             }
             else
             {
@@ -107,6 +107,7 @@ namespace CFD.WebAPI._services
                 throw new ArgumentException($"Erro. CODE: {e.Message}");
             }
         }
+        // Deletar
         public async Task<User> Delete(int id) {
             try {
                 var user = await _repo.GetUserById(id);

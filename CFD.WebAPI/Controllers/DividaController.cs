@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CFD.Dominio;
 using CFD.Repositorio;
+using CFD.WebAPI._services;
 using CFD.WebAPI.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +18,15 @@ namespace CFD.WebAPI.Controllers
     [ApiController]
     public class DividaController : ControllerBase
     {
-        private readonly ICFDRepositorio _repo;
-        private readonly IMapper _map;
-        public DividaController(ICFDRepositorio repo, IMapper mapper) { _repo = repo; _map = mapper; }
+        //private readonly ICFDRepositorio _repo;
+        //private readonly IMapper _map;
+        private readonly DividaService _dividaService;
+        public DividaController(DividaService dividaService)
+        {
+            //_repo = repo; 
+            //_map = mapper;
+            _dividaService = dividaService;
+        }
 
         // Lista Todos
         [HttpGet]
@@ -27,12 +34,12 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var divida = await _repo.GetAllDivida();
-                var result = _map.Map<IEnumerable<DividaDto>>(divida);
+                var divida = await _dividaService.GetAllDivida();
 
-                return Ok(result);
+                return Ok(divida);
 
-            } catch(System.Exception e)
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista Todos. CODE: ${e.Message}");
             }
@@ -43,13 +50,13 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var divida = await _repo.GetDividaById(id);
-                var result = _map.Map<DividaDto>(divida);
+                var divida = await _dividaService.GetDividaById(id);
 
-                if (result == null) return NotFound("Nenhum registro encontrado!!");
+                if (divida == null) return NotFound("Nenhum registro encontrado!!");
 
-                return Ok(result);
-            } catch (System.Exception e)
+                return Ok(divida);
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista por id. CODE: ${e.Message}");
             }
@@ -60,12 +67,12 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var buscarDividaPorTituloOuDescricaoProdutoOuValor = await _repo.GetDividaByTituloOrDescricaoProdutoOrValor(buscar);
-                var result = _map.Map<DividaDto[]>(buscarDividaPorTituloOuDescricaoProdutoOuValor);
+                var buscarPor = await _dividaService.GetDividaByTituloOrDescricaoProdutoOrValor(buscar);
 
-                return Ok(result);
+                return Ok(buscarPor);
 
-            } catch (System.Exception e)
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista busca completa. CODE: ${e.Message}");
             }
@@ -76,43 +83,30 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var divida = _map.Map<Divida>(dividaDto);
-
-                _repo.Add(divida);
-
-                if(await _repo.SaveChanges())
-                {
-                    return Created($"/api/divida/{divida.Id}", divida);
-                }
-
+                var result = await _dividaService.Add(dividaDto);
+                
+                return Created($"/api/divida/{result.Id}", result);
             }
             catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Adicionar. CODE: ${e.Message}");
             }
-            return BadRequest();
         }
         // Atualizar
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, DividaDto dividaDto)
+        public async Task<IActionResult> Update(DividaDto dividaDto)
         {
             try
             {
-                var divida = await _repo.GetDividaById(id);
-                if (divida == null) return NotFound("Nenhum registro encontrado com esse Id");
 
-                _map.Map(dividaDto, divida);
-                _repo.Update(divida);
+                await _dividaService.Update(dividaDto);
 
-                if(await _repo.SaveChanges())
-                {
-                    return Created($"api/divida/{dividaDto.Id}", _map.Map<DividaDto>(divida));
-                }
-            } catch (System.Exception e)
+                return Created($"api/divida/{dividaDto.Id}", dividaDto);
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Atualizar. CODE: ${e.Message}");
             }
-            return BadRequest();
         }
         // Deletar
         [HttpDelete("{id}")]
@@ -120,19 +114,17 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var divida = await _repo.GetDividaById(id);
+                var divida = await _dividaService.GetDividaById(id);
                 if (divida == null) return NotFound("Nenhum registro encontrado com esse Id");
 
-                _repo.Delete(divida);
-                if (await _repo.SaveChanges())
-                {
-                    return Ok();
-                }
-            } catch(System.Exception e)
+                await _dividaService.Delete(id);
+                
+                return Ok();
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Deletar. CODE: ${e.Message}");
             }
-            return BadRequest();
         }
 
 

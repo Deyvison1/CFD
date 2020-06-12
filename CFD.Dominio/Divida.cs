@@ -16,7 +16,7 @@ namespace CFD.Dominio
         public string DescricaoProduto  { get; set; }
         public int Situacao             { get; set; }
         public int UserId               { get; set; }
-        public User Usuario             { get; }
+        //public User Usuario             { get; }
 
 
     }

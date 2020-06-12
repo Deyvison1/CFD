@@ -32,6 +32,7 @@ namespace CFD.WebAPI
             services.AddDbContext<CFDContext>(x => x.UseMySql(Configuration.GetConnectionString("Conexao")));
             services.AddScoped<ICFDRepositorio, CFDRepositorio>();
             services.AddScoped<UserService>();
+            services.AddScoped<DividaService>();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

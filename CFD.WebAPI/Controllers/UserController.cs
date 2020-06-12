@@ -19,10 +19,13 @@ namespace CFD.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         //private readonly ICFDRepositorio _repo;
-        private readonly IMapper _map;
+        //private readonly IMapper _map;
         private readonly UserService _userService;
-        public UserController(IMapper mapper, UserService userService) 
-        { _map = mapper; _userService = userService; }
+        public UserController(UserService userService)
+        {
+            //_map = mapper;
+            _userService = userService;
+        }
 
         // Lista Todos
         [HttpGet]
@@ -32,9 +35,10 @@ namespace CFD.WebAPI.Controllers
             {
                 var user = await _userService.GetAllUser();
                 //var result = _map.Map<IEnumerable<UserDto>>(user);
-
+                
                 return Ok(user);
-            } catch(System.Exception e)
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista Todos. CODE: ${e.Message}");
             }
@@ -48,7 +52,8 @@ namespace CFD.WebAPI.Controllers
                 var result = await _userService.GetUserById(id);
                 return Ok(result);
 
-            } catch(System.Exception e)
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista por Id. CODE: ${e.Message}");
             }
@@ -64,7 +69,8 @@ namespace CFD.WebAPI.Controllers
 
                 return Ok(buscarPor);
 
-            } catch(System.Exception e)
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Listar por Nome ou Email. CODE: ${e.Message}");
             }
@@ -77,12 +83,13 @@ namespace CFD.WebAPI.Controllers
             {
                 //var user = _map.Map<User>(userDto);
 
-                await _userService.Add(userDto);
+                var result = await _userService.Add(userDto);
 
-                return Created($"/api/user/{userDto.Id}", userDto);
+                return Created($"/api/user/{result.Id}", result);
 
-                
-            } catch(System.Exception e)
+
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Adicionar. CODE: ${e.Message}");
             }
@@ -95,10 +102,11 @@ namespace CFD.WebAPI.Controllers
             {
                 await _userService.Update(userDto);
 
-                return Created($"/api/user/{userDto.Id}",userDto);
+                return Created($"/api/user/{userDto.Id}", userDto);
 
 
-            } catch(System.Exception e)
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Atualizar. CODE: ${e.Message}");
             }
@@ -113,7 +121,8 @@ namespace CFD.WebAPI.Controllers
 
                 return Ok();
 
-            } catch(System.Exception e)
+            }
+            catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Deletar. CODE: ${e.Message}");
             }
