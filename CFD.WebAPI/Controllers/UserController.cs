@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CFD.Dominio;
 using CFD.Repositorio;
+using CFD.WebAPI._services;
 using CFD.WebAPI.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +18,11 @@ namespace CFD.WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ICFDRepositorio _repo;
+        //private readonly ICFDRepositorio _repo;
         private readonly IMapper _map;
-        public UserController(ICFDRepositorio repo, IMapper mapper) { _repo = repo; _map = mapper; }
+        private readonly UserService _userService;
+        public UserController(IMapper mapper, UserService userService) 
+        { _map = mapper; _userService = userService; }
 
         // Lista Todos
         [HttpGet]
@@ -27,10 +30,10 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var user = await _repo.GetAllUser();
-                var result = _map.Map<IEnumerable<UserDto>>(user);
+                var user = await _userService.GetAllUser();
+                //var result = _map.Map<IEnumerable<UserDto>>(user);
 
-                return Ok(result);
+                return Ok(user);
             } catch(System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista Todos. CODE: ${e.Message}");
@@ -42,10 +45,7 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var user = await _repo.GetUserById(id);
-                var result = _map.Map<UserDto>(user);
-                if (result == null) return NotFound("Não encontrou nenhum registro");
-
+                var result = await _userService.GetUserById(id);
                 return Ok(result);
 
             } catch(System.Exception e)
@@ -59,10 +59,10 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var buscarPorNomeOuEmail = await _repo.GetUserByNomeOrId(buscar);
-                var result = _map.Map<UserDto[]>(buscarPorNomeOuEmail);
+                var buscarPor = await _userService.GetUserByNomeOrIdOrPapel(buscar);
+                //var result = _map.Map<UserDto[]>(buscarPorNomeOuEmail);
 
-                return Ok(result);
+                return Ok(buscarPor);
 
             } catch(System.Exception e)
             {
@@ -75,40 +75,33 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var user = _map.Map<User>(userDto);
-                _repo.Add(user);
+                //var user = _map.Map<User>(userDto);
 
-                if(await _repo.SaveChanges())
-                {
-                    return Created($"/api/user/{user.Id}", user);
-                }
+                await _userService.Add(userDto);
+
+                return Created($"/api/user/{userDto.Id}", userDto);
+
+                
             } catch(System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Adicionar. CODE: ${e.Message}");
             }
-            return BadRequest();
         }
         // Atualizar
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UserDto userDto)
+        public async Task<IActionResult> Update(UserDto userDto)
         {
             try
             {
-                var user = await _repo.GetUserById(id);
-                if (user == null) return NotFound("Não encontrado por id");
+                await _userService.Update(userDto);
 
-                _map.Map(userDto, user);
-                _repo.Update(user);
+                return Created($"/api/user/{userDto.Id}",userDto);
 
-                if(await _repo.SaveChanges())
-                {
-                    return Created($"/api/user/{userDto.Id}",_map.Map<UserDto>(user));
-                }
+
             } catch(System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Atualizar. CODE: ${e.Message}");
             }
-            return BadRequest();
         }
         // Deletar
         [HttpDelete("{id}")]
@@ -116,20 +109,14 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var userFinal = await _repo.GetUserById(id);
-                if (userFinal == null) return BadRequest();
+                await _userService.Delete(id);
 
-                _repo.Delete(userFinal);
-                if(await _repo.SaveChanges())
-                {
-                    return Ok();
-                }
+                return Ok();
 
             } catch(System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Deletar. CODE: ${e.Message}");
             }
-            return BadRequest();
         }
 
     }

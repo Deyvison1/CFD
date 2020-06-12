@@ -20,7 +20,18 @@ namespace CFD.Repositorio
         // Lista por ID
         Task<User> GetUserById(int id);
         // Listar por Nome ou Email
-        Task<User[]> GetUserByNomeOrId(string buscar);
+        Task<User[]> GetUserByNomeOrIdOrPapel(string buscar);
+        // Lista por Email
+        Task<User> GetUserByEmailExist(string email);
+
+        // ----> Divida
+        // Listar Todas
+        Task<Divida[]> GetAllDivida();
+        // Listar por ID
+        Task<Divida> GetDividaById(int id);
+        // Listar por Titulo, Descricao do Produto, Valor
+        Task<Divida[]> GetDividaByTituloOrDescricaoProdutoOrValor(string buscar);
+
 
     }
 }

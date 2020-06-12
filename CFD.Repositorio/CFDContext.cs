@@ -11,5 +11,6 @@ namespace CFD.Repositorio
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Divida> Dividas { get; set; }
     }
 }

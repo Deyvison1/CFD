@@ -10,6 +10,7 @@ namespace CFD.WebAPI.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<Divida, DividaDto>().ReverseMap();
         }
     }
 }

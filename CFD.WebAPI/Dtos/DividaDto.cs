@@ -1,0 +1,21 @@
+﻿using System;
+using CFD.Dominio;
+
+namespace CFD.WebAPI.Dtos
+{
+    public class DividaDto
+    {
+        public int Id { get; set; }
+        public string Titulo { get; set; }
+        public DateTime DataCompra { get; set; }
+        public DateTime DataRegistro { get; set; }
+        public DateTime? DataModificacao { get; set; }
+        public int TipoDivida { get; set; }
+        public int Parcela { get; set; }
+        public int FormaCompra { get; set; }
+        public DateTime DataVencimento { get; set; }
+        public double Valor { get; set; }
+        public string DescricaoProduto { get; set; }
+        public int UserId { get; set; }
+    }
+}

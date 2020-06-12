@@ -10,7 +10,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20200530180035_init.cs" />
+    <Compile Remove="Migrations\CFDContextModelSnapshot.cs" />
+    <Compile Remove="Migrations\20200530180035_init.Designer.cs" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>

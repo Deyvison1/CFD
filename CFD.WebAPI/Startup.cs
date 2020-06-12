@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CFD.Repositorio;
+using CFD.WebAPI._services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,8 +29,9 @@ namespace CFD.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CFDContext>(x => x.UseSqlite(Configuration.GetConnectionString("Conexao")));
+            services.AddDbContext<CFDContext>(x => x.UseMySql(Configuration.GetConnectionString("Conexao")));
             services.AddScoped<ICFDRepositorio, CFDRepositorio>();
+            services.AddScoped<UserService>();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
