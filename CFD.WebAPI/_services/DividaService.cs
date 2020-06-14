@@ -21,25 +21,25 @@ namespace CFD.WebAPI._services
             try {
                 var divida = await _repo.GetAllDivida();
 
-                var result = _map.Map<IEnumerable<DividaDto>>(divida);
+                var result = _map.Map<DividaDto[]>(divida);
 
                 return result.ToArray();
 
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro no Listar Todos. CODE: {e.Message}");
+                throw new ArgumentException($"DIVIDA: Erro no Listar Todos. CODE: {e.Message}");
             }
         }
         // Listar Por ID
         public async Task<DividaDto> GetDividaById(int id) {
             try {
                 var divida = await _repo.GetDividaById(id);
-                if(divida == null) throw new ArgumentException("Nenhum registro foi encontrado com esse Id");
+                if(divida == null) throw new ArgumentException("DIVIDA: Nenhum registro foi encontrado com esse Id");
 
                 var result = _map.Map<DividaDto>(divida);
 
                 return result;
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro ao Listar por Id. CODE: {e.Message}");
+                throw new ArgumentException($"DIVIDA: Erro ao Listar por id. CODE: {e.Message}");
             }
         }
         // Listar Por Titulo ou Descricao do Produto ou Valor
@@ -51,7 +51,7 @@ namespace CFD.WebAPI._services
 
                 return result;
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro ao listar por nome ou descricao ou valor. CODE: {e.Message}");
+                throw new ArgumentException($"DIVIDA: Erro ao listar por nome ou descricao ou valor. CODE: {e.Message}");
             }
         }
         // Adicionar
@@ -64,17 +64,17 @@ namespace CFD.WebAPI._services
                 if(await _repo.SaveChanges()) {
                     return _map.Map<DividaDto>(entidade);
                 } else {
-                    throw new ArgumentException("Erro ao adicionar");
+                    throw new ArgumentException("DIVIDA: Erro ao adicionar");
                 }
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro ao adicionar. CODE: {e.Message}");
+                throw new ArgumentException($"DIVIDA: Erro ao adicionar. CODE: {e.Message}");
             }
         }
         // Atualizar
         public async Task<Divida> Update(DividaDto dividaDto) {
             try {
                 var divida = await _repo.GetDividaById(dividaDto.Id);
-                if(divida == null) throw new ArgumentException("Nenhum registro encontrado com esse id");
+                if(divida == null) throw new ArgumentException("DIVIDA: Nenhum registro encontrado com esse id");
 
                 _map.Map(dividaDto, divida);
                 _repo.Update(divida);
@@ -82,29 +82,29 @@ namespace CFD.WebAPI._services
                 if(await _repo.SaveChanges()) {
                     return divida;
                 } else {
-                    throw new ArgumentException("Erro ao atualizar");
+                    throw new ArgumentException("DIVIDA: Erro ao atualizar");
                 }
 
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro no atualizar. CODE: {e.Message}");
+                throw new ArgumentException($"DIVIDA: Erro no atualizar. CODE: {e.Message}");
             }
         }
         // Deletar
         public async Task<Divida> Delete(int id) {
             try {
                 var divida = await _repo.GetDividaById(id);
-                if(divida == null) throw new ArgumentException("Nenhum registro encontrado");
+                if(divida == null) throw new ArgumentException("DIVIDA: Nenhum registro encontrado com esse id");
 
                 _repo.Delete(divida);
 
                 if(await _repo.SaveChanges()) {
                     return divida;
                 } else {
-                    throw new ArgumentException("Erro ao atualizar");
+                    throw new ArgumentException("DIVIDA: Erro ao atualizar");
                 }
 
             }catch(System.Exception e) {
-                throw new ArgumentException($"Erro no deletar. CODE: {e.Message}");
+                throw new ArgumentException($"DIVIDA: Erro no deletar. CODE: {e.Message}");
             }
         }
     }

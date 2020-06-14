@@ -41,7 +41,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista Todos. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"DIVIDA: Erro no Lista Todos. CODE: {e.Message}");
             }
         }
         // Lista Por Id
@@ -52,13 +52,11 @@ namespace CFD.WebAPI.Controllers
             {
                 var divida = await _dividaService.GetDividaById(id);
 
-                if (divida == null) return NotFound("Nenhum registro encontrado!!");
-
                 return Ok(divida);
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista por id. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"DIVIDA: Erro no Lista por id. CODE: {e.Message}");
             }
         }
         // Listar Por Titulo ou Descricao do Produto ou Valor
@@ -74,7 +72,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista busca completa. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"DIVIDA: Erro no Lista busca completa. CODE: {e.Message}");
             }
         }
         // Adicionar
@@ -89,7 +87,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Adicionar. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"DIVIDA: Erro no Adicionar. CODE: {e.Message}");
             }
         }
         // Atualizar
@@ -105,7 +103,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Atualizar. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"DIVIDA: Erro no Atualizar. CODE: {e.Message}");
             }
         }
         // Deletar
@@ -115,7 +113,6 @@ namespace CFD.WebAPI.Controllers
             try
             {
                 var divida = await _dividaService.GetDividaById(id);
-                if (divida == null) return NotFound("Nenhum registro encontrado com esse Id");
 
                 await _dividaService.Delete(id);
                 
@@ -123,7 +120,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Deletar. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"DIVIDA: Erro no Deletar. CODE: {e.Message}");
             }
         }
 

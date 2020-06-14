@@ -34,13 +34,12 @@ namespace CFD.WebAPI.Controllers
             try
             {
                 var user = await _userService.GetAllUser();
-                //var result = _map.Map<IEnumerable<UserDto>>(user);
                 
                 return Ok(user);
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista Todos. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Lista Todos. CODE: {e.Message}");
             }
         }
         // Lista por ID
@@ -55,7 +54,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Lista por Id. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Lista por Id. CODE: {e.Message}");
             }
         }
         // Listar por Nome ou Email
@@ -65,14 +64,13 @@ namespace CFD.WebAPI.Controllers
             try
             {
                 var buscarPor = await _userService.GetUserByNomeOrIdOrPapel(buscar);
-                //var result = _map.Map<UserDto[]>(buscarPorNomeOuEmail);
 
                 return Ok(buscarPor);
 
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Listar por Nome ou Email. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Listar por Nome ou Email. CODE: {e.Message}");
             }
         }
         // Adicionar
@@ -81,7 +79,6 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                //var user = _map.Map<User>(userDto);
 
                 var result = await _userService.Add(userDto);
 
@@ -91,7 +88,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Adicionar. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Adicionar. CODE: {e.Message}");
             }
         }
         // Atualizar
@@ -108,7 +105,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Atualizar. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Atualizar. CODE: {e.Message}");
             }
         }
         // Deletar
@@ -124,7 +121,7 @@ namespace CFD.WebAPI.Controllers
             }
             catch (System.Exception e)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro no Deletar. CODE: ${e.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Deletar. CODE: {e.Message}");
             }
         }
 

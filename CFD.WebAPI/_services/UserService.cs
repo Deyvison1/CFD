@@ -29,7 +29,7 @@ namespace CFD.WebAPI._services
                 return result.ToArray();
                 
             } catch(System.Exception e) {
-                throw new ArgumentException("Erro no listar todos "+e);
+                throw new ArgumentException($"USER: Erro ao listar todos. CODE: {e.Message}");
             }
         }
         // Listar por ID
@@ -38,14 +38,14 @@ namespace CFD.WebAPI._services
             try
             {
                 var user = await _repo.GetUserById(id);
-                if(user == null) throw new ArgumentException("Nenhum registro encontrado");
+                if(user == null) throw new ArgumentException("USER: Nenhum registro encontrado com esse id.");
                 var result = _map.Map<UserDto>(user);
 
                 return result;
 
-            } catch 
+            } catch (System.Exception e)
             {
-                throw new ArgumentException("Nenhum registro encontrado");
+                throw new ArgumentException($"USER: Erro ao listar por id. CODE: {e.Message}");
             }
 
         }
@@ -58,9 +58,8 @@ namespace CFD.WebAPI._services
 
                 return result;
 
-
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro ao Buscar. CODE: {e.Message}");
+                throw new ArgumentException($"USER: Erro ao Buscar. CODE: {e.Message}");
             }
         }
         // Adicionar
@@ -68,7 +67,7 @@ namespace CFD.WebAPI._services
         {
             try {
             var emailExiste = await _repo.GetUserByEmailExist(user.Email);
-            if (emailExiste != null) throw new ArgumentException("Email ja existe");
+            if (emailExiste != null) throw new ArgumentException("USER: Ja existe um usuario cadastrado com esse e-mail.");
 
             var entidade = _map.Map<User>(user);
 
@@ -80,10 +79,10 @@ namespace CFD.WebAPI._services
             }
             else
             {
-                throw new ArgumentException("Erro ao Adicionar.");
+                throw new ArgumentException("USER: Erro ao Adicionar.");
             }
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro ao Adicionar.CODE: {e.Message}");
+                throw new ArgumentException($"USER: Erro ao Adicionar. CODE: {e.Message}");
             }
         }
 
@@ -92,7 +91,7 @@ namespace CFD.WebAPI._services
         {
             try {
                 var user = await _repo.GetUserById(userDto.Id);
-                if(user == null) throw new ArgumentException("Nenhum registro encontrado"); 
+                if(user == null) throw new ArgumentException("USER: Nenhum registro encontrado com esse id"); 
                 
                 _map.Map(userDto, user);
                 _repo.Update(user);
@@ -100,29 +99,29 @@ namespace CFD.WebAPI._services
                 if(await _repo.SaveChanges()) {
                     return user;
                 } else {
-                    throw new ArgumentException("Erro no Update");
+                    throw new ArgumentException("USER: Erro no Atualizar");
                 }
 
             } catch(System.Exception e) {
-                throw new ArgumentException($"Erro. CODE: {e.Message}");
+                throw new ArgumentException($"USER: Erro ao atualizar. CODE: {e.Message}");
             }
         }
         // Deletar
         public async Task<User> Delete(int id) {
             try {
                 var user = await _repo.GetUserById(id);
-                if(user == null) throw new ArgumentException("Erro");
+                if(user == null) throw new ArgumentException("USER: Nenhum registro encontrado com esse id");
 
                 _repo.Delete(user);
 
                 if(await _repo.SaveChanges()) {
                     return user;
                 } else {
-                    throw new ArgumentException($"Erro");
+                    throw new ArgumentException("Erro ao deletar");
                 }
 
             }catch(System.Exception e) {
-                throw new ArgumentException($"Erro. CODE: {e.Message}");
+                throw new ArgumentException($"USER: Erro ao Deletar. CODE: {e.Message}");
             }
         }
 
