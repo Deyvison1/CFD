@@ -124,6 +124,23 @@ namespace CFD.WebAPI.Controllers
             }
         }
 
+        // Mostrar o valor das dividas por usuario
+        [HttpGet("valorTotal/{id}")]
+        public async Task<IActionResult> GetAllDividaValorPorUserId(int id)
+        {
+            try
+            {
+                double[] result = new double[2];
+                 
+                result = await _dividaService.ValorTotal(id);
+
+                return Ok(result);
+            } catch(System.Exception e)
+            {
+                throw new ArgumentException($"DIVIDA: Erro ao listar valor de todas dividas por usuario. CODE: {e.Message}");
+            }
+        }
+
 
     }
 }

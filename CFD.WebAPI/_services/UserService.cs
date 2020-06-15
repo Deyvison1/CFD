@@ -124,8 +124,5 @@ namespace CFD.WebAPI._services
                 throw new ArgumentException($"USER: Erro ao Deletar. CODE: {e.Message}");
             }
         }
-
-
-
     }
 }

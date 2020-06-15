@@ -107,5 +107,38 @@ namespace CFD.WebAPI._services
                 throw new ArgumentException($"DIVIDA: Erro no deletar. CODE: {e.Message}");
             }
         }
+        // Valores Dividas por Usuario
+        public async Task<double[]> ValorTotal(int idUser)
+        {
+            try
+            {
+                double[] final = new double[3];
+
+                var todasDividas = await _repo.GetAllDivida();
+                double dividasPagas = todasDividas.Where(
+                    x => x.Situacao == 1
+                ).Sum(
+                    x => x.Valor
+                );
+                double todasDividasPendentes = todasDividas.Where(
+                    x => x.Situacao == 0
+                ).Sum(
+                    x => x.Valor
+                );
+                double todasDividasPorIdUser = todasDividas.Where(
+                    x => x.UserId == idUser
+                ).Sum(x => x.Valor);
+                
+                final[0] = dividasPagas;
+                final[1] = todasDividasPorIdUser;
+                final[2] = todasDividasPendentes;
+
+                return final;
+            } catch(System.Exception e)
+            {
+                throw new ArgumentException($"DIVIDA: Erro ao listar valor total da divida por id. CODE: {e.Message}");
+            }
+        }
+
     }
 }
