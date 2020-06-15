@@ -130,7 +130,7 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                double[] result = new double[2];
+                double[] result = new double[3];
                  
                 result = await _dividaService.ValorTotal(id);
 

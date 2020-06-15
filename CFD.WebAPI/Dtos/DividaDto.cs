@@ -16,6 +16,7 @@ namespace CFD.WebAPI.Dtos
         public DateTime DataVencimento { get; set; }
         public double Valor { get; set; }
         public string DescricaoProduto { get; set; }
+        public int Situacao { get; set; }
         public int UserId { get; set; }
     }
 }

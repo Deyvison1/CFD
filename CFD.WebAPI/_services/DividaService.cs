@@ -116,12 +116,12 @@ namespace CFD.WebAPI._services
 
                 var todasDividas = await _repo.GetAllDivida();
                 double dividasPagas = todasDividas.Where(
-                    x => x.Situacao == 1
+                    x => x.UserId == idUser && x.Situacao == 1
                 ).Sum(
                     x => x.Valor
                 );
                 double todasDividasPendentes = todasDividas.Where(
-                    x => x.Situacao == 0
+                    x => x.UserId == idUser && x.Situacao == 0
                 ).Sum(
                     x => x.Valor
                 );
