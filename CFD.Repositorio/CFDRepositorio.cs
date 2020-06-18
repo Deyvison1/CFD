@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CFD.Dominio;
@@ -36,15 +38,23 @@ namespace CFD.Repositorio
         // Lista Todos Usuarios
         public async Task<User[]> GetAllUser()
         {
-            IQueryable<User> query = _context.Users.Include(x => x.Dividas);
+            IQueryable<User> query = _context.Users
+                .Include(x => x.Rendas).Include(x => x.Dividas);
 
             query = query.OrderByDescending(x => x.Id);
             return await query.ToArrayAsync();
         }
-        // Lista User Por ID
+        // Listar User por Id para Servicos
         public async Task<User> GetUserById(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+        // Lista User Por ID
+        public async Task<User[]> GetUserByIdAndDividasAndRendas(int id)
+        {
+            return await _context.Users.Where(
+                x => x.Id == id
+            ).Include(x => x.Rendas).Include(x => x.Dividas).ToArrayAsync();
         }
         // Listar User Por Nome Ou Email
         public async Task<User[]> GetUserByNomeOrIdOrPapel(string buscar)
@@ -61,8 +71,6 @@ namespace CFD.Repositorio
                     x => x.Email == email
                 );
         }
-
-
         // -----> Divida
         // Lista Todas Dividas
         public async Task<Divida[]> GetAllDivida()
@@ -83,6 +91,27 @@ namespace CFD.Repositorio
                 x.Valor.ToString().Contains(buscar)
             );
 
+            return await result.ToArrayAsync();
+        }
+        // -----> Renda
+        // Listar Todas
+        public async Task<Renda[]> GetAllRenda()
+        {
+            return await _context.Rendas.OrderByDescending(x => x.Id).ToArrayAsync();
+        }
+
+        public async Task<Renda> GetRendaById(int id)
+        {
+            return await _context.Rendas.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Renda[]> GetRendaByTituloOrValorOrDescricao(string buscar)
+        {
+            var result = _context.Rendas.Where(
+                x => x.Titulo.ToLower().Contains(buscar.ToLower()) ||
+                x.Valor.ToString().Contains(buscar) ||
+                x.Descricao.ToLower().Contains(buscar.ToLower())
+            );
             return await result.ToArrayAsync();
         }
     }

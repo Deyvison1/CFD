@@ -42,6 +42,21 @@ namespace CFD.WebAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Lista Todos. CODE: {e.Message}");
             }
         }
+        // Listar por Id com Rendas e Dividas
+        [HttpGet("detalhes/{id}")]
+        public async Task<IActionResult> GetUserByIdAndDividasAndRendas(int id)
+        {
+            try
+            {
+                var result = await _userService.GetUserByIdAndDividasAndRendas(id);
+
+                return Ok(result);
+            }
+            catch (System.Exception e)
+            {
+                throw new ArgumentException($"USER: Erro ao listar por Id com Rendas e Dividas. CODE: {e.Message}");
+            }
+        }
         // Lista por ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

@@ -32,6 +32,22 @@ namespace CFD.WebAPI._services
                 throw new ArgumentException($"USER: Erro ao listar todos. CODE: {e.Message}");
             }
         }
+        // Listar por Id com as Rendas e Dividas
+        public async Task<UserDto[]> GetUserByIdAndDividasAndRendas(int id)
+        {
+            try
+            {
+                var userByIdAndRendasAndDividas = await _repo.GetUserByIdAndDividasAndRendas(id);
+
+                var result = _map.Map<UserDto[]>(userByIdAndRendasAndDividas);
+
+                return result.ToArray();
+
+            } catch(System.Exception e)
+            {
+                throw new ArgumentException($"Erro ao listar por id com rendas e dividas. CODE: {e.Message}");
+            }
+        }
         // Listar por ID
         public async Task<UserDto> GetUserById(int id)
         {

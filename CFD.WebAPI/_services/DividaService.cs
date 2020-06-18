@@ -108,13 +108,16 @@ namespace CFD.WebAPI._services
             }
         }
         // Valores Dividas por Usuario
-        public async Task<double[]> ValorTotal(int idUser)
+        public async Task<DividaValoresDto> ValorTotal(int idUser)
         {
             try
             {
-                double[] final = new double[3];
 
                 var todasDividas = await _repo.GetAllDivida();
+                var todasRendas = await _repo.GetAllRenda();
+                // Rendas
+                double totalRendas = todasRendas.Where(x => x.UserId == idUser).Sum(x => x.Valor);
+                // Dividas
                 double dividasPagas = todasDividas.Where(
                     x => x.UserId == idUser && x.Situacao == 1
                 ).Sum(
@@ -128,12 +131,16 @@ namespace CFD.WebAPI._services
                 double todasDividasPorIdUser = todasDividas.Where(
                     x => x.UserId == idUser
                 ).Sum(x => x.Valor);
-                
-                final[0] = dividasPagas;
-                final[1] = todasDividasPorIdUser;
-                final[2] = todasDividasPendentes;
+                DividaValoresDto dividaValoresDto = new DividaValoresDto();
 
-                return final;
+                dividaValoresDto.ValorTotalDividasPorId = todasDividasPorIdUser;
+                dividaValoresDto.ValorTotalDividasPagas = dividasPagas;
+                dividaValoresDto.ValorTotalDividasPendentes = todasDividasPendentes;
+                dividaValoresDto.RendaTotal = totalRendas;
+                dividaValoresDto.RendaLiquida = totalRendas - todasDividasPendentes;
+
+
+                return dividaValoresDto;
             } catch(System.Exception e)
             {
                 throw new ArgumentException($"DIVIDA: Erro ao listar valor total da divida por id. CODE: {e.Message}");

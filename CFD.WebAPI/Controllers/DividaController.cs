@@ -112,7 +112,7 @@ namespace CFD.WebAPI.Controllers
         {
             try
             {
-                var divida = await _dividaService.GetDividaById(id);
+                //var divida = await _dividaService.GetDividaById(id);
 
                 await _dividaService.Delete(id);
                 
@@ -123,18 +123,17 @@ namespace CFD.WebAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"DIVIDA: Erro no Deletar. CODE: {e.Message}");
             }
         }
-
         // Mostrar o valor das dividas por usuario
         [HttpGet("valorTotal/{id}")]
         public async Task<IActionResult> GetAllDividaValorPorUserId(int id)
         {
             try
             {
-                double[] result = new double[3];
-                 
-                result = await _dividaService.ValorTotal(id);
+                DividaValoresDto dividaValoresDto = new DividaValoresDto();
 
-                return Ok(result);
+                dividaValoresDto = await _dividaService.ValorTotal(id);
+
+                return Ok(dividaValoresDto);
             } catch(System.Exception e)
             {
                 throw new ArgumentException($"DIVIDA: Erro ao listar valor de todas dividas por usuario. CODE: {e.Message}");

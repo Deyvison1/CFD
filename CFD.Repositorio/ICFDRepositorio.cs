@@ -17,6 +17,8 @@ namespace CFD.Repositorio
         // ----> User
         // Listar Todos
         Task<User[]> GetAllUser();
+        // Listar por Id para deletar e etc
+        Task<User[]> GetUserByIdAndDividasAndRendas(int id);
         // Lista por ID
         Task<User> GetUserById(int id);
         // Listar por Nome ou Email
@@ -31,7 +33,13 @@ namespace CFD.Repositorio
         Task<Divida> GetDividaById(int id);
         // Listar por Titulo, Descricao do Produto, Valor
         Task<Divida[]> GetDividaByTituloOrDescricaoProdutoOrValor(string buscar);
-
+        // ----> Renda
+        // Listar Todas
+        Task<Renda[]> GetAllRenda();
+        // Listar por ID
+        Task<Renda> GetRendaById(int id);
+        // Listar por Titulo, Valor ou Descricao
+        Task<Renda[]> GetRendaByTituloOrValorOrDescricao(string buscar);
 
     }
 }

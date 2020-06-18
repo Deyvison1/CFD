@@ -53,6 +53,28 @@ namespace CFD.Repositorio.Migrations
                     b.ToTable("Dividas");
                 });
 
+            modelBuilder.Entity("CFD.Dominio.Renda", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descricao");
+
+                    b.Property<int>("Tipo");
+
+                    b.Property<string>("Titulo");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<double>("Valor");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rendas");
+                });
+
             modelBuilder.Entity("CFD.Dominio.User", b =>
                 {
                     b.Property<int>("Id")
@@ -75,6 +97,14 @@ namespace CFD.Repositorio.Migrations
                 {
                     b.HasOne("CFD.Dominio.User")
                         .WithMany("Dividas")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CFD.Dominio.Renda", b =>
+                {
+                    b.HasOne("CFD.Dominio.User", "Usuario")
+                        .WithMany("Rendas")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

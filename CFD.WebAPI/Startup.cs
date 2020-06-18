@@ -33,6 +33,7 @@ namespace CFD.WebAPI
             services.AddScoped<ICFDRepositorio, CFDRepositorio>();
             services.AddScoped<UserService>();
             services.AddScoped<DividaService>();
+            services.AddScoped<RendaService>();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

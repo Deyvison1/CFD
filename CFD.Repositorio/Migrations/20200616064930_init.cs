@@ -54,9 +54,37 @@ namespace CFD.Repositorio.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Rendas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Titulo = table.Column<string>(nullable: true),
+                    Tipo = table.Column<int>(nullable: false),
+                    Valor = table.Column<double>(nullable: false),
+                    Descricao = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rendas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rendas_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Dividas_UserId",
                 table: "Dividas",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rendas_UserId",
+                table: "Rendas",
                 column: "UserId");
         }
 
@@ -64,6 +92,9 @@ namespace CFD.Repositorio.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Dividas");
+
+            migrationBuilder.DropTable(
+                name: "Rendas");
 
             migrationBuilder.DropTable(
                 name: "Users");

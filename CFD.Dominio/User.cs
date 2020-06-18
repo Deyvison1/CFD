@@ -12,6 +12,7 @@ namespace CFD.Dominio
         public string Senha         { get; private set; }
         public int Papel            { get; private set; }
         public List<Divida> Dividas { get; set; } = new List<Divida>();
+        public List<Renda> Rendas   { get; set; } = new List<Renda>();
 
         /*
         public User()

@@ -11,6 +11,7 @@ namespace CFD.WebAPI.Helpers
         {
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Divida, DividaDto>().ReverseMap();
+            CreateMap<Renda, RendaDto>().ReverseMap();
         }
     }
 }
