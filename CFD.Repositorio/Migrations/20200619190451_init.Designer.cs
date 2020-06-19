@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CFD.Repositorio.Migrations
 {
     [DbContext(typeof(CFDContext))]
-    [Migration("20200616064930_init")]
+    [Migration("20200619190451_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.Property<double>("Valor");
+                    b.Property<decimal>("Valor");
 
                     b.HasKey("Id");
 
@@ -68,7 +68,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.Property<double>("Valor");
+                    b.Property<decimal>("Valor");
 
                     b.HasKey("Id");
 
@@ -105,7 +105,7 @@ namespace CFD.Repositorio.Migrations
 
             modelBuilder.Entity("CFD.Dominio.Renda", b =>
                 {
-                    b.HasOne("CFD.Dominio.User", "Usuario")
+                    b.HasOne("CFD.Dominio.User")
                         .WithMany("Rendas")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -38,7 +38,7 @@ namespace CFD.Repositorio.Migrations
                     Parcela = table.Column<int>(nullable: false),
                     FormaCompra = table.Column<int>(nullable: false),
                     DataVencimento = table.Column<DateTime>(nullable: true),
-                    Valor = table.Column<double>(nullable: false),
+                    Valor = table.Column<decimal>(nullable: false),
                     DescricaoProduto = table.Column<string>(nullable: true),
                     Situacao = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
@@ -62,7 +62,7 @@ namespace CFD.Repositorio.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Titulo = table.Column<string>(nullable: true),
                     Tipo = table.Column<int>(nullable: false),
-                    Valor = table.Column<double>(nullable: false),
+                    Valor = table.Column<decimal>(nullable: false),
                     Descricao = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false)
                 },

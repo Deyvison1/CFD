@@ -44,7 +44,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.Property<double>("Valor");
+                    b.Property<decimal>("Valor");
 
                     b.HasKey("Id");
 
@@ -66,7 +66,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.Property<double>("Valor");
+                    b.Property<decimal>("Valor");
 
                     b.HasKey("Id");
 
@@ -103,7 +103,7 @@ namespace CFD.Repositorio.Migrations
 
             modelBuilder.Entity("CFD.Dominio.Renda", b =>
                 {
-                    b.HasOne("CFD.Dominio.User", "Usuario")
+                    b.HasOne("CFD.Dominio.User")
                         .WithMany("Rendas")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

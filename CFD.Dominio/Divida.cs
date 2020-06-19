@@ -12,7 +12,7 @@ namespace CFD.Dominio
         public int Parcela               { get; set; }
         public int FormaCompra           { get; set; }
         public DateTime? DataVencimento  { get; set; }
-        public double Valor              { get; set; }
+        public decimal Valor             { get; set; }
         public string DescricaoProduto   { get; set; }
         public int Situacao              { get; set; }
         public int UserId                { get; set; }

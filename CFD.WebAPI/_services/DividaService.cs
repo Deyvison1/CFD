@@ -116,19 +116,19 @@ namespace CFD.WebAPI._services
                 var todasDividas = await _repo.GetAllDivida();
                 var todasRendas = await _repo.GetAllRenda();
                 // Rendas
-                double totalRendas = todasRendas.Where(x => x.UserId == idUser).Sum(x => x.Valor);
+                decimal totalRendas = todasRendas.Where(x => x.UserId == idUser).Sum(x => x.Valor);
                 // Dividas
-                double dividasPagas = todasDividas.Where(
+                decimal dividasPagas = todasDividas.Where(
                     x => x.UserId == idUser && x.Situacao == 1
                 ).Sum(
                     x => x.Valor
                 );
-                double todasDividasPendentes = todasDividas.Where(
+                decimal todasDividasPendentes = todasDividas.Where(
                     x => x.UserId == idUser && x.Situacao == 0
                 ).Sum(
                     x => x.Valor
                 );
-                double todasDividasPorIdUser = todasDividas.Where(
+                decimal todasDividasPorIdUser = todasDividas.Where(
                     x => x.UserId == idUser
                 ).Sum(x => x.Valor);
                 DividaValoresDto dividaValoresDto = new DividaValoresDto();
@@ -136,7 +136,7 @@ namespace CFD.WebAPI._services
                 dividaValoresDto.ValorTotalDividasPorId = todasDividasPorIdUser;
                 dividaValoresDto.ValorTotalDividasPagas = dividasPagas;
                 dividaValoresDto.ValorTotalDividasPendentes = todasDividasPendentes;
-                dividaValoresDto.RendaTotal = totalRendas;
+                dividaValoresDto.RendaBruta = totalRendas;
                 dividaValoresDto.RendaLiquida = totalRendas - todasDividasPendentes;
 
 
