@@ -14,6 +14,20 @@ namespace CFD.WebAPI._services
         private readonly IMapper _map;
         public RendaService(ICFDRepositorio repo, IMapper map) { _repo = repo; _map = map; }
 
+
+        // Listar Todos por Renda
+        public async Task<RendaDto[]> GetAllRendapPage(int page) 
+        {
+            try {
+                var rendaPage = await _repo.GetAllRendaPaginacao(page);
+
+                var result = _map.Map<RendaDto[]>(rendaPage);
+
+                return result.ToArray();
+            }catch(System.Exception e) {
+                throw new ArgumentException($"RENDA: Erro ao listar todos por paginacao. CODE: {e.Message}");
+            }
+        }
         // Listar todos
         public async Task<RendaDto[]> GetAllRenda()
         {

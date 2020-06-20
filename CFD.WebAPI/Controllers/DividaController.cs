@@ -27,7 +27,20 @@ namespace CFD.WebAPI.Controllers
             //_map = mapper;
             _dividaService = dividaService;
         }
+        // Listar Todos por Paginacao
+        [HttpGet("pages/{page}")]
+        public async Task<IActionResult> GetAllDividaPage(int page) 
+        {
+            try 
+            {
+                var dividaPage = await _dividaService.GetAllDividaPage(page);
 
+                return Ok(dividaPage);
+            } catch(System.Exception e) 
+            { 
+                throw new ArgumentException($"DIVIDA: Erro ao listar todos por paginacao. CODE: {e.Message}");
+            }
+        }
         // Lista Todos
         [HttpGet]
         public async Task<IActionResult> GetAllDivida()

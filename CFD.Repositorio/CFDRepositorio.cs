@@ -37,12 +37,12 @@ namespace CFD.Repositorio
             return (await _context.SaveChangesAsync()) > 0;
         }
         // -----> User
-        // Paginacao
-        public User[] GetAllUSerPaginacao(int page)
+        // Listar Todos por Paginacao
+        public async Task<User[]> GetAllUSerPaginacao(int page)
         {
-            var result = _context.Users.OrderByDescending(
+            var result = await _context.Users.OrderByDescending(
                 x => x.Id
-            ).ToPagedList(page, 10);
+            ).ToPagedListAsync(page, 10);
             return result.ToArray();
         }
         
@@ -83,6 +83,15 @@ namespace CFD.Repositorio
                 );
         }
         // -----> Divida
+        // Listar Todas Dividas Por Paginacao
+        public async Task<Divida[]> GetAllDividaPaginacao(int page)
+        {
+            var dividaPage = await _context.Dividas.OrderByDescending(
+                x => x.Id
+            ).ToPagedListAsync(page, 10);
+
+            return dividaPage.ToArray();
+        }
         // Lista Todas Dividas
         public async Task<Divida[]> GetAllDivida()
         {
@@ -105,6 +114,15 @@ namespace CFD.Repositorio
             return await result.ToArrayAsync();
         }
         // -----> Renda
+        // Listar Toda por Paginacao
+        public async Task<Renda[]> GetAllRendaPaginacao(int page)
+        {
+            var rendaPage = await _context.Rendas.OrderByDescending(
+                X => X.Id 
+            ).ToPagedListAsync(page,10);
+            
+            return rendaPage.ToArray();
+        }
         // Listar Todas
         public async Task<Renda[]> GetAllRenda()
         {

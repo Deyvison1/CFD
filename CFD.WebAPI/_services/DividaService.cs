@@ -16,6 +16,23 @@ namespace CFD.WebAPI._services
 
         public DividaService(ICFDRepositorio repo, IMapper mapper) { _repo = repo; _map = mapper; }
 
+
+        // Listar Todos Por Paginacao
+        public async Task<DividaDto[]> GetAllDividaPage(int page)
+        {
+            try
+            {
+                var dividaPage = await _repo.GetAllDividaPaginacao(page);
+
+                var result = _map.Map<DividaDto[]>(dividaPage);
+
+                return result.ToArray();
+
+            }catch(System.Exception e)
+            {
+                throw new ArgumentException($"DIVIDA: Erro ao listar todos por paginacao. CODE: {e.Message}");
+            }
+        }
         // Listar Todos 
         public async Task<DividaDto[]> GetAllDivida() {
             try {

@@ -21,9 +21,10 @@ namespace CFD.WebAPI._services
         }
 
         // Listar com Paginacao
-        public UserDto[] GetAllUserPaginacao() {
+        public async Task<UserDto[]> GetAllUserPaginacao(int page) {
             try {
-                var user = _repo.GetAllUSerPaginacao(2);
+                var user = await _repo.GetAllUSerPaginacao(page);
+                
                 var result = _map.Map<UserDto[]>(user);
 
                 return result.ToArray();                

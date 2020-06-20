@@ -17,7 +17,7 @@ namespace CFD.Repositorio
         Task<bool> SaveChanges();
         // ----> User
         // Paginacao
-        User[] GetAllUSerPaginacao(int page);
+        Task<User[]> GetAllUSerPaginacao(int page);
         // Listar Todos
         Task<User[]> GetAllUser();
         // Listar por Id para deletar e etc
@@ -30,13 +30,17 @@ namespace CFD.Repositorio
         Task<User> GetUserByEmailExist(string email);
 
         // ----> Divida
-        // Listar Todas
+        // Listar Todas por Paginacao
+        Task<Divida[]> GetAllDividaPaginacao(int page);
+        // Listar Todas com seus includes
         Task<Divida[]> GetAllDivida();
         // Listar por ID
         Task<Divida> GetDividaById(int id);
         // Listar por Titulo, Descricao do Produto, Valor
         Task<Divida[]> GetDividaByTituloOrDescricaoProdutoOrValor(string buscar);
         // ----> Renda
+        // Listar Todas por Pginacao
+        Task<Renda[]> GetAllRendaPaginacao(int page);
         // Listar Todas
         Task<Renda[]> GetAllRenda();
         // Listar por ID

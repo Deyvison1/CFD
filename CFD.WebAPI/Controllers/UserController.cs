@@ -27,10 +27,10 @@ namespace CFD.WebAPI.Controllers
             _userService = userService;
         }
         // Listar Todos por Paginacao
-        [HttpGet("paginacao")]
-        public IActionResult GetAllUserPaginacao() {
+        [HttpGet("pages/{page}")]
+        public async Task<IActionResult> GetAllUserPaginacao(int page) {
             try {
-                var user = _userService.GetAllUserPaginacao();
+                var user = await _userService.GetAllUserPaginacao(page);
 
                 return Ok(user);
             }catch(System.Exception e) {
