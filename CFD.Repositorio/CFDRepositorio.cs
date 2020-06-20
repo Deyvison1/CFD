@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CFD.Dominio;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
+
 
 namespace CFD.Repositorio
 {
@@ -35,6 +37,15 @@ namespace CFD.Repositorio
             return (await _context.SaveChangesAsync()) > 0;
         }
         // -----> User
+        // Paginacao
+        public User[] GetAllUSerPaginacao(int page)
+        {
+            var result = _context.Users.OrderByDescending(
+                x => x.Id
+            ).ToPagedList(page, 10);
+            return result.ToArray();
+        }
+        
         // Lista Todos Usuarios
         public async Task<User[]> GetAllUser()
         {

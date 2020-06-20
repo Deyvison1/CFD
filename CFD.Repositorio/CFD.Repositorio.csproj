@@ -1,24 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="..\CFD.Dominio\CFD.Dominio.csproj" />
+    <ProjectReference Include="..\CFD.Dominio\CFD.Dominio.csproj"/>
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="Microsoft.EntityFrameworkCore">
       <HintPath>..\..\..\..\..\usr\share\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.2.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0"/>
+    <PackageReference Include="X.PagedList" Version="7.0.0"/>
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\20200530180035_init.cs" />
-    <Compile Remove="Migrations\CFDContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20200530180035_init.Designer.cs" />
+    <Compile Remove="Migrations\20200530180035_init.cs"/>
+    <Compile Remove="Migrations\CFDContextModelSnapshot.cs"/>
+    <Compile Remove="Migrations\20200530180035_init.Designer.cs"/>
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
 </Project>

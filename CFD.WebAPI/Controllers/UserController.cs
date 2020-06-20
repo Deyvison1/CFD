@@ -26,7 +26,17 @@ namespace CFD.WebAPI.Controllers
             //_map = mapper;
             _userService = userService;
         }
+        // Listar Todos por Paginacao
+        [HttpGet("paginacao")]
+        public IActionResult GetAllUserPaginacao() {
+            try {
+                var user = _userService.GetAllUserPaginacao();
 
+                return Ok(user);
+            }catch(System.Exception e) {
+                throw new ArgumentException($"USER: Erro ao Listar todos por Paginacao. CODE: {e.Message}");
+            }
+        }
         // Lista Todos
         [HttpGet]
         public async Task<IActionResult> GetAllUser()

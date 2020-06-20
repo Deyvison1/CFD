@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using CFD.Dominio;
-
+using X.PagedList;
 namespace CFD.Repositorio
 {
     public interface ICFDRepositorio
@@ -15,6 +16,8 @@ namespace CFD.Repositorio
         void Delete<T>(T entidade) where T : class;
         Task<bool> SaveChanges();
         // ----> User
+        // Paginacao
+        User[] GetAllUSerPaginacao(int page);
         // Listar Todos
         Task<User[]> GetAllUser();
         // Listar por Id para deletar e etc

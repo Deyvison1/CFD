@@ -16,13 +16,27 @@ namespace CFD.WebAPI._services
         private readonly ICFDRepositorio _repo;
         private readonly IMapper _map;
 
-        public UserService(ICFDRepositorio repo, IMapper mapper) { _repo = repo; _map = mapper; }
+        public UserService(ICFDRepositorio repo, IMapper mapper, CFDContext context) { 
+            _repo = repo; _map = mapper;
+        }
 
+        // Listar com Paginacao
+        public UserDto[] GetAllUserPaginacao() {
+            try {
+                var user = _repo.GetAllUSerPaginacao(2);
+                var result = _map.Map<UserDto[]>(user);
+
+                return result.ToArray();                
+            }catch(System.Exception e) {
+                throw new ArgumentException($"USER: Erro no Listar por Paginacao. CODE: {e.Message}");
+            }
+        }
         // Lista Todos
         public async Task<UserDto[]> GetAllUser()
         {
             try{
                 var user = await _repo.GetAllUser();
+                //var user = await _repo.GetAllUser();
 
                 var result = _map.Map<UserDto[]>(user);
                 
