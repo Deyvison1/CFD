@@ -17,7 +17,6 @@ export class UserComponent implements OnInit {
   usersLast: User[] = [];
   usersFiltrados: User[] = [];
   user: User = new User();
-  userlastNew: User = new User();
   form: FormGroup;
   _filtroLista = '';
   // --> Pages
