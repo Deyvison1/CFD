@@ -19,6 +19,25 @@ namespace CFD.WebAPI._services
         public UserService(ICFDRepositorio repo, IMapper mapper, CFDContext context) { 
             _repo = repo; _map = mapper;
         }
+        // Listar ultimos usuarios add
+        public async Task<UserDto[]> GetUltimosUser() {
+            try 
+            {
+                var userComplete = await _repo.GetAllUser();
+
+                var testeFinal = userComplete.OrderByDescending(
+                    x => x.Id
+                ).Take(3);
+
+               var result = _map.Map<UserDto[]>(testeFinal);
+
+                return result.ToArray();
+            }catch(System.Exception e) 
+            {
+                new ArgumentException($"USER: Erro ao listar ultimos adicionados. CODE: {e.Message}");
+            }
+            throw new ArgumentException();
+        }
         // Mostar Todos Itens e retorna a quantiade de paginas
         public async Task<double> GetUserQtdPages()
         {

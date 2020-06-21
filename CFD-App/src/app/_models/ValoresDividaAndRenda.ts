@@ -3,5 +3,6 @@ export class ValoresDividaAndRenda {
     valorTotalDividasPagas: number;
     valorTotalDividasPendentes: number;
     rendaBruta: number;
-    rendaLiquida: number;               
+    rendaLiquida: number;
+
 }

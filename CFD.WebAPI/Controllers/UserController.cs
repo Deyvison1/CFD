@@ -26,6 +26,20 @@ namespace CFD.WebAPI.Controllers
             //_map = mapper;
             _userService = userService;
         }
+        // Listar Ultimos Usuarios.
+        [HttpGet("userLast")]
+        public async Task<IActionResult> GetUltimosUserAdd()
+        {
+            try 
+            {
+                var user = await _userService.GetUltimosUser();
+
+                return Ok(user);
+            }catch(System.Exception e)
+            {
+                throw new ArgumentException($"USER: Erro listar ultimos usuarios. CODE: {e.Message}");
+            }
+        }
         // Listar Quantidade de Paginas
         [HttpGet("pages")]
         public async Task<IActionResult> QuantidadeDePages() 

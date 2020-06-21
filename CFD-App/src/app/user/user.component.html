@@ -5,34 +5,27 @@
       <p class="h3 text-center">Ultimos Usuarios Adicionados</p>
       <table width="100%" class="table table-hover text-center">
         <thead>
-          <tr>
+          <tr class="text-center">
             <th>Nome</th>
             <th>E-mail</th>
-            <th>Senha</th>
+            <th class="text-center">Papel</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Deyvison</td>
-            <td>deyvison@gmail.com</td>
-            <td>1234</td>
-          </tr>
-          <tr>
-            <td>Deyvison</td>
-            <td>deyvison@gmail.com</td>
-            <td>1234</td>
-          </tr>
-          <tr>
-            <td>Deyvison</td>
-            <td>deyvison@gmail.com</td>
-            <td>1234</td>
+          <tr class="text-center" *ngFor="let user of usersLast">
+            <td>{{user.nome}}</td>
+            <td>{{user.email}}</td>
+            <td class="text-center">
+              <button *ngIf="user.papel == 1" class="btn btn-success"><i class="fas fa-crown"></i> </button>
+              <button *ngIf="user.papel == 2" class="btn btn-secondary"><i class="fas fa-user"></i> </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     <div style=" margin-top: 10px; background-image: url(../../assets/imgFundo.png);"
       class="col-sm border-dark rounded painelValores">
-      <div class="row" style=" min-width: 100px ;height: 210px; " class="rounded">
+      <div class="row" style=" min-width: 100px ;height: 210px; margin-top: 11px; " class="rounded">
         <div class="row">
           <div class="col-sm">
             <div style="height: 100px; text-align: center; " class="">
@@ -55,15 +48,18 @@
           <div class="col-sm">
             <div style="height: 100px; text-align: center;" class="">
               <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
-                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Renda Liquida</p>
-                <p class="h4 text-success">{{valorePainel.rendaLiquida | currency: 'R$ '}}</p>
+                <p *ngIf="valorePainel.rendaLiquida < 0" style="height: 25px;" class="h6 bg-danger border border-danger rounded"><i class="fas fa-arrow-down"></i>&nbsp;Renda Liquida</p>
+                <p *ngIf="valorePainel.rendaLiquida > 0"  style="height: 25px;" class="h6 bg-success border border-secondary rounded"><i class="fas fa-arrow-up"></i>&nbsp; Renda Liquida</p>
+                <p *ngIf="valorePainel.rendaLiquida == 0"  style="height: 25px;" class="h6 bg-success border border-secondary rounded"><i class="fas fa-pause" aria-hidden="true"></i>&nbsp; Renda Liquida</p>
+                <p *ngIf="valorePainel.rendaLiquida >= 0" class="h4 text-success">{{valorePainel.rendaLiquida | currency: 'R$ '}}</p>
+                <p *ngIf="valorePainel.rendaLiquida < 0" class="h4 text-danger">{{valorePainel.rendaLiquida | currency: 'R$ '}}</p>
               </div>
             </div>
           </div>
           <div class="col-sm">
             <div style="height: 100px; text-align: center;" class="">
               <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
-                <p style="height: 25px;" class="h6 bg-danger border border-secondary rounded">Dividas Pendentes</p>
+                <p style="height: 25px;" class="h6 bg-danger border border-secondary rounded"><i class="fas fa-clock"></i>&nbsp; Dividas Pendentes</p>
                 <p class="h4 text-danger">{{valorePainel.valorTotalDividasPendentes | currency: 'R$ '}}</p>
               </div>
             </div>
@@ -96,7 +92,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of usersFiltrados | paginate: { itemsPerPage: 5, currentPage: pageAtual }">
+          <tr *ngFor="let user of usersFiltrados | paginate: { itemsPerPage: 7, currentPage: pageAtual }">
             <td>{{user.nome}}</td>
             <td>{{user.email}}</td>
             <td>{{user.senha}}</td>
@@ -123,3 +119,18 @@
         ></pagination-controls>
     </div>
   </div>
+
+  <div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+            <h3>
+                Loading...
+            </h3>
+        </div>
+    </ng-template>
+      
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+
+
+

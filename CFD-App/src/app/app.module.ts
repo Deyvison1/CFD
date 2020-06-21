@@ -17,7 +17,8 @@ import { DividaComponent } from './divida/divida.component';
 import { RendaComponent } from './renda/renda.component';
 import { NavComponent } from './nav/nav.component';
 import { UserService } from './_services/user.service';
-
+import { FooterComponent } from './footer/footer.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UserService } from './_services/user.service';
     UserComponent,
     DividaComponent,
     RendaComponent,
-    NavComponent
+    NavComponent,
+    FooterComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -37,7 +39,15 @@ import { UserService } from './_services/user.service';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: 'rgba(201, 201, 201, 0.3)',
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff',
+      secondaryColour: '#ffffff',
+      tertiaryColour: '#ffffff'
+    })
   ],
   providers: [
     UserService

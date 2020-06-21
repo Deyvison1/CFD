@@ -13,17 +13,22 @@ import { ValoresDividaAndRenda } from '../_models/ValoresDividaAndRenda';
 })
 export class UserComponent implements OnInit {
 
-  
-  valorePainel: ValoresDividaAndRenda = new ValoresDividaAndRenda();
   users: User[] = [];
-  form: FormGroup;
-  _filtroLista = '';
+  usersLast: User[] = [];
   usersFiltrados: User[] = [];
   user: User = new User();
-  pageAtual: number = 1;
-  qtdItensPorPage: number = 5;
+  userlastNew: User = new User();
+  form: FormGroup;
+  _filtroLista = '';
+  // --> Pages
+  pageAtual = 1;
+  qtdItensPorPage = 5;
   qtdPages: number;
-  id = 1;
+  // --> Painel
+  id = 12;
+  valorePainel: ValoresDividaAndRenda = new ValoresDividaAndRenda();
+  public loading = false;
+
 
   get filtroLista(): string {
     return this._filtroLista;
@@ -44,12 +49,14 @@ export class UserComponent implements OnInit {
     this.validacao();
     this.getAllUser();
     this.getValoresPainel(this.id);
+    this.getUltimosUsers();
   }
 
   filtrarLista(buscar: string): User[] {
     this.userService.getAllByNomeOrEmail(buscar).subscribe(
       data => {
         this.usersFiltrados = data;
+        this.loading = false;
         return this.users;
       }, error => {
         console.log(`Erro no filtro. CODE: ${error}`);
@@ -62,10 +69,7 @@ export class UserComponent implements OnInit {
     this.form = this.fb.group({
       nome: [''],
       email: [''],
-      senha: [''],
-      valorTotalDividasPorId: [''],
-      valorTotalDividasPagas: [''],
-
+      senha: ['']
     });
   }
   qtdpagesUser() {
@@ -88,12 +92,24 @@ export class UserComponent implements OnInit {
       }
     );
   }
+  getUltimosUsers() {
+    return this.userService.getUltimosUsers().subscribe(
+      (data: User[]) => {
+        this.usersLast = data;
+        console.log(data);
+      } , error => {
+        console.log(error);
+      }
+    );
+  }
   getAllUser() {
+    this.loading = true;
     return this.userService.getAll().subscribe(
       (data: User[]) => {
         this.users = data;
         this.usersFiltrados = this.users;
         console.log(data);
+        this.loading = false;
       }, error => {
         console.log(`Erro ao listar. CODE: ${error}`);
       }

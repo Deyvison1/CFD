@@ -19,6 +19,9 @@ export class UserService {
   ) { }
 
   // Gets
+  getUltimosUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseURL}/userLast`);
+  }
   // Valores Divida e Divida
   getValoresPainel(id: number) {
     return this.http.get(`${this.baseURLValores}${id}`);
