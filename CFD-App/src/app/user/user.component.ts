@@ -25,8 +25,9 @@ export class UserComponent implements OnInit {
   qtdItensPorPage = 5;
   qtdPages: number;
   // --> Painel
-  id = 12;
+  id = 1;
   valorePainel: ValoresDividaAndRenda = new ValoresDividaAndRenda();
+  // Loading
   public loading = false;
 
 
