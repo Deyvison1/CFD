@@ -25,11 +25,11 @@ namespace CFD.WebAPI._services
             {
                 var userComplete = await _repo.GetAllUser();
 
-                var testeFinal = userComplete.OrderByDescending(
+                var resultFinal = userComplete.OrderByDescending(
                     x => x.Id
                 ).Take(3);
 
-               var result = _map.Map<UserDto[]>(testeFinal);
+               var result = _map.Map<UserDto[]>(resultFinal);
 
                 return result.ToArray();
             }catch(System.Exception e) 

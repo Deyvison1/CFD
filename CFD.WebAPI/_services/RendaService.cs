@@ -14,7 +14,26 @@ namespace CFD.WebAPI._services
         private readonly IMapper _map;
         public RendaService(ICFDRepositorio repo, IMapper map) { _repo = repo; _map = map; }
 
+        // Listar Ultimos Adicionados
+        public async Task<RendaDto[]> GetUltimosRendaAdd() 
+        {
+            try
+            {
+                var todasRendas = await _repo.GetAllRenda();
 
+                var lastRendasAdd = todasRendas.OrderByDescending(
+                    x => x.Id
+                ).Take(3);
+
+                var lastRendaDto = _map.Map<RendaDto[]>(lastRendasAdd);
+
+                return lastRendaDto.ToArray();
+            }
+            catch(System.Exception e)
+            {
+                throw new ArgumentException($"RENDA: Erro ao listar ultimos. CODE: {e.Message}");
+            }
+        }
         // Listar Todos por Renda
         public async Task<RendaDto[]> GetAllRendapPage(int page) 
         {

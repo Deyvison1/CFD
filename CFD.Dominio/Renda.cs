@@ -5,7 +5,7 @@ namespace CFD.Dominio
     {
         public int Id           { get; set; }
         public string Titulo    { get; set; }
-        // 0 = Mensal, 1 = Diaria
+        // 1 = Mensal, 2 = Diaria
         public int Tipo         { get; set; }
         public decimal Valor    { get; set; }
         public string Descricao { get; set; }

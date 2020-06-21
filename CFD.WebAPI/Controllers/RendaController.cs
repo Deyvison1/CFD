@@ -46,6 +46,20 @@ namespace CFD.WebAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"RENDA: Erro no Lista Todos. CODE: {e.Message}");
             }
         }
+        // Listar Ultimos Adiconados
+        [HttpGet("rendaLast")]
+        public async Task<IActionResult> GetUltimosRendaAdd() 
+        {
+            try 
+            {
+                var lastRendas = await _rendaService.GetUltimosRendaAdd();
+
+                return Ok(lastRendas);
+            }catch(System.Exception e) 
+            {
+                throw new ArgumentException($"RENDA: Erro ao listar ultimos. CODE: {e.Message}");
+            }
+        }
         // Listar por Id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRendaById(int id)

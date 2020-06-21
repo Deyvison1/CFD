@@ -1,9 +1,9 @@
 export class Renda {
-        Id: number;
-        Titulo: string;
+        id: number;
+        titulo: string;
         // 0 = Mensal, 1 = Diaria
-        Tipo: number;
-        Valor: number;
-        Descricao: string;
-        UserId: number;
+        tipo: number;
+        valor: number;
+        descricao: string;
+        userId: number;
 }

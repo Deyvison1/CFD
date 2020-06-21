@@ -11,10 +11,10 @@ export class NavComponent implements OnInit {
 
 
   abrirMenu() {
-    document.getElementById("mySidenav").style.width = "173px";
+    document.getElementById('mySidenav').style.width = '173px';
   }
   fecharMenu() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById('mySidenav').style.width = '0';
   }
 
   ngOnInit() {
