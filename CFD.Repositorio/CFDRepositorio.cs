@@ -42,7 +42,7 @@ namespace CFD.Repositorio
         {
             var result = await _context.Users.OrderByDescending(
                 x => x.Id
-            ).ToPagedListAsync(page, 10);
+            ).ToPagedListAsync(page, 5);
             return result.ToArray();
         }
         

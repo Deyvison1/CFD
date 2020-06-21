@@ -152,7 +152,5 @@ namespace CFD.WebAPI.Controllers
                 throw new ArgumentException($"DIVIDA: Erro ao listar valor de todas dividas por usuario. CODE: {e.Message}");
             }
         }
-
-
     }
 }

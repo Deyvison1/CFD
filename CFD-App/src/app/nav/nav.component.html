@@ -1,0 +1,47 @@
+<nav style="min-width: 1100px;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!--
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  -->
+<div style="color: #FFFFFF;">
+  <span style="font-size:20px;cursor:pointer;" (click)="abrirMenu()" >&#9776; open</span>
+</div>
+      <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">CFD</a>
+          </li>
+        </ul>
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Vinícius
+          </a>
+          <div *dropdownMenu class="dropdown-menu aqui" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">
+              Perfil
+            </a>
+            <div role="separator" class="divider"></div>
+            <a class="dropdown-item" href="#">
+              Sair
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+<div style="background-color: #343a40;" id="mySidenav" class="sidenav">
+  <div class="text-center">
+    <a href="../pages/listUser.php">
+      <img class="img-fluid" width="80" src="../../assets/linux.png">
+    </a>
+  </div>
+  <a href="javascript:void(0)" class="closebtn" (click)="fecharMenu()">&times;</a>
+  <br><br>
+  <a href="#">Dividas</a>
+  <a href="#">Rendas</a>
+  <a href="#">Usuarios</a>
+  <a href="#">Contato</a>
+</div>

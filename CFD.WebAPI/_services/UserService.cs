@@ -19,7 +19,21 @@ namespace CFD.WebAPI._services
         public UserService(ICFDRepositorio repo, IMapper mapper, CFDContext context) { 
             _repo = repo; _map = mapper;
         }
+        // Mostar Todos Itens e retorna a quantiade de paginas
+        public async Task<double> GetUserQtdPages()
+        {
+            try {
+                // Pego todos registros e conto quantos tem.
+                double qtdRegistros = (await _repo.GetAllUser()).Count();
+                // Divido por 5 e arredondo sempre pra cima perto de um inteiro.
+                int qtdPages = Convert.ToInt32(Math.Ceiling(qtdRegistros / 5));
 
+                return qtdPages;
+            }catch(System.Exception e) 
+            {
+                throw new ArgumentException($"USER: Erro ao mostrar quantiade de paginas. CODE: {e.Message}");
+            }
+        }
         // Listar com Paginacao
         public async Task<UserDto[]> GetAllUserPaginacao(int page) {
             try {

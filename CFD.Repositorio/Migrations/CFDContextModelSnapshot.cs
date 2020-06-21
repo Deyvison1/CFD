@@ -95,7 +95,7 @@ namespace CFD.Repositorio.Migrations
 
             modelBuilder.Entity("CFD.Dominio.Divida", b =>
                 {
-                    b.HasOne("CFD.Dominio.User")
+                    b.HasOne("CFD.Dominio.User", "Usuario")
                         .WithMany("Dividas")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

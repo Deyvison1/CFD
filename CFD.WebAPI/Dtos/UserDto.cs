@@ -21,7 +21,7 @@ namespace CFD.WebAPI.Dtos
         [Range(1,2, ErrorMessage = "{0} so pode ser 1 ou 2.")]
         public int Papel            { get; set; }
         public List<Renda> Rendas   { get; set; }
-        public List<Divida> Dividas { get; set; }   
+        public List<Divida> Dividas { get; set; }  
 
     }
 }

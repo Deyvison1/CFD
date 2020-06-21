@@ -26,10 +26,24 @@ namespace CFD.WebAPI.Controllers
             //_map = mapper;
             _userService = userService;
         }
+        // Listar Quantidade de Paginas
+        [HttpGet("pages")]
+        public async Task<IActionResult> QuantidadeDePages() 
+        {
+            try {
+                var qtdPages = await _userService.GetUserQtdPages();
+
+                return Ok(qtdPages);
+            }catch(System.Exception e) 
+            {
+                throw new ArgumentException($"USER: Erro ao listar quantidade de paginas. CODE: {e.Message}");
+            }
+        }
         // Listar Todos por Paginacao
-        [HttpGet("pages/{page}")]
+        [HttpGet("page/{page}")]
         public async Task<IActionResult> GetAllUserPaginacao(int page) {
             try {
+                
                 var user = await _userService.GetAllUserPaginacao(page);
 
                 return Ok(user);

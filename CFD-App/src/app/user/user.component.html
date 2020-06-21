@@ -1,42 +1,125 @@
 <div class="container">
-<div class="d-flex">
-  <div class="form-inline mr-auto">
-    <div class="form-group mb-2">
-      <input placeholder="Pesquisar" type="search" class="form-control mr-2 text-center" [(ngModel)]="filtroLista" /><i
-        class="fas fa-search"></i>
+  <div style="padding-left: 60px; padding-right: 60px;" class="row justify-content-around">
+    <div class="col-sm-7 border border-light border-0">
+      <p></p>
+      <p class="h3 text-center">Ultimos Usuarios Adicionados</p>
+      <table width="100%" class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Senha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Deyvison</td>
+            <td>deyvison@gmail.com</td>
+            <td>1234</td>
+          </tr>
+          <tr>
+            <td>Deyvison</td>
+            <td>deyvison@gmail.com</td>
+            <td>1234</td>
+          </tr>
+          <tr>
+            <td>Deyvison</td>
+            <td>deyvison@gmail.com</td>
+            <td>1234</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style=" margin-top: 10px; background-image: url(../../assets/imgFundo.png);"
+      class="col-sm border-dark rounded painelValores">
+      <div class="row" style=" min-width: 100px ;height: 210px; " class="rounded">
+        <div class="row">
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center; " class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border border-dark rounded">
+                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Renda Bruta</p>
+                <p class="h4 text-success">{{valorePainel.rendaBruta | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center; " class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border border-dark rounded">
+                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Dividas Paga</p>
+                <p class="h4 text-success">{{valorePainel.valorTotalDividasPagas | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center;" class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
+                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Renda Liquida</p>
+                <p class="h4 text-success">{{valorePainel.rendaLiquida | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center;" class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
+                <p style="height: 25px;" class="h6 bg-danger border border-secondary rounded">Dividas Pendentes</p>
+                <p class="h4 text-danger">{{valorePainel.valorTotalDividasPendentes | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form>
+          <div style="width: 260px; position: absolute; bottom: 5px; left: 5px;" class="buscar">
+            <input [(ngModel)]="filtroLista" type="search" name="busca" class="form-control text-center" placeholder="Pesquisar">
+          </div>
+        </form>
+        <div style="width: 135px; position: absolute; bottom: 5px; right: 6px;" class="newItens">
+          <button class="btn btn-success text-center">Novo Usuario</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div style="background-color: #f0efef;" class="container">
+
+
+      <table width="100%" class="table table-hover text-left">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Senha</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usersFiltrados | paginate: { itemsPerPage: 5, currentPage: pageAtual }">
+            <td>{{user.nome}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.senha}}</td>
+            <td class="text-center">
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-sm">
+                  <i class="fa fa-edit" aria-hidden="true"></i>&nbsp; Editar
+                </button>
+                <button class="btn btn-info btn-sm">
+                  <i class="fas fa-info"></i>&nbsp; Detalhes
+                </button>
+                <button class="btn btn-danger btn-sm">
+                  <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Deletar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="width: 370px; height: 30px; ;margin-top: 10px;" class="">
+        <pagination-controls (pageChange)="pageAtual = $event" previousLabel="Anterior"
+        nextLabel="Proximo"
+        ></pagination-controls>
     </div>
   </div>
-  <div>
-    <button class="btn btn-outline-success">
-      <i class="fa fa-plus-circle"></i>&nbsp; Novo Usuario
-    </button>
-  </div>
-</div>
-<table class="table table-hover table-striped">
-  <thead class="thead-light">
-    <tr>
-      <th>Nome</th>
-      <th>E-mail</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of usersFiltrados">
-      <td>{{user.nome}}</td>
-      <td>{{user.email}}</td>
-      <td>
-        <div class="btn-group">
-        <button class="btn btn-info btn-sm">
-          <i class="fa fa-edit" aria-hidden="true"></i>
-          &nbsp; Editar
-        </button>
-        <button class="btn btn-danger btn-sm">
-          <i class="fa fa-trash" aria-hidden="true"></i>
-          &nbsp; Deletar
-        </button>
-      </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</div>

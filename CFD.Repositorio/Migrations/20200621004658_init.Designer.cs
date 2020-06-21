@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CFD.Repositorio.Migrations
 {
     [DbContext(typeof(CFDContext))]
-    [Migration("20200619190451_init")]
+    [Migration("20200621004658_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,7 +97,7 @@ namespace CFD.Repositorio.Migrations
 
             modelBuilder.Entity("CFD.Dominio.Divida", b =>
                 {
-                    b.HasOne("CFD.Dominio.User")
+                    b.HasOne("CFD.Dominio.User", "Usuario")
                         .WithMany("Dividas")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
