@@ -1,15 +1,15 @@
 export class Divida {
-        Id: number;
-        Titulo: string;
-        DataCompra: Date;
-        DataRegistro: Date;
-        DataModificacao: Date;
-        TipoDivida: number;
-        Parcela: number;
-        FormaCompra: number;
-        DataVencimento: Date;
-        Valor: number;
-        DescricaoProduto: string;
-        Situacao: number;
-        UserId: number;
+        id: number;
+        titulo: string;
+        dataCompra: Date;
+        dataRegistro: Date;
+        dataModificacao: Date;
+        tipoDivida: number;
+        parcela: number;
+        formaCompra: number;
+        dataVencimento: Date;
+        valor: number;
+        descricaoProduto: string;
+        situacao: number;
+        userId: number;
 }

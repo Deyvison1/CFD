@@ -5,13 +5,18 @@
       </button>
   -->
 <div style="color: #FFFFFF;">
-  <span style="font-size:20px;cursor:pointer;" (click)="abrirMenu()" >&#9776; open</span>
+  <span style="font-size:20px;cursor:pointer;" (click)="abrirMenu()" >&#9776; Menu</span>
 </div>
       <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="#">CFD</a>
+            <a class="nav-link">CFD</a>
           </li>
+          <!--
+          <li class="nav-item active">
+            <a class="nav-link">{{urlAtual}}</a>
+          </li>
+          -->
         </ul>
       </div>
       <ul class="navbar-nav">
@@ -32,7 +37,7 @@
         </li>
       </ul>
     </nav>
-<div style="background-color: #343a40;" id="mySidenav" class="sidenav">
+<div style="background-color: #343a40;" id="mySidenav" class="sidenav active">
   <div class="text-center">
     <a href="../pages/listUser.php">
       <img class="img-fluid" width="80" src="../../assets/linux.png">
@@ -40,8 +45,7 @@
   </div>
   <a href="javascript:void(0)" class="closebtn" (click)="fecharMenu()">&times;</a>
   <br><br>
-  <a href="#">Dividas</a>
-  <a href="#">Rendas</a>
-  <a href="#">Usuarios</a>
-  <a href="#">Contato</a>
+  <a href="#" routerLink="divida">Dividas</a>
+  <a href="#" routerLink="renda">Rendas</a>
+  <a href="#" routerLink="user">Usuarios</a>
 </div>

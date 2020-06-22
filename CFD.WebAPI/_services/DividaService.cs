@@ -15,7 +15,23 @@ namespace CFD.WebAPI._services
         public readonly IMapper _map;
 
         public DividaService(ICFDRepositorio repo, IMapper mapper) { _repo = repo; _map = mapper; }
+        // Listar Ultimas Dividas
+        public async Task<DividaDto[]> GetUltimasDividasAdd ()
+        {
+            try {
+                var todasDividas = await _repo.GetAllDivida();
 
+                var ultimasDividas = todasDividas.OrderByDescending(
+                    x => x.Id
+                ).Take(3);
+                
+                var dividasDto = _map.Map<DividaDto[]>(ultimasDividas);
+                
+                return dividasDto.ToArray();
+            }catch(System.Exception e) {
+                throw new ArgumentException($"DIVIDA: Erro ao listar ultimas. CODE: {e.Message}");
+            }
+        }
 
         // Listar Todos Por Paginacao
         public async Task<DividaDto[]> GetAllDividaPage(int page)

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public router: Router
+  ) {  }
+
+  ngOnInit() {
+  }
 
 
   abrirMenu() {
@@ -15,9 +21,6 @@ export class NavComponent implements OnInit {
   }
   fecharMenu() {
     document.getElementById('mySidenav').style.width = '0';
-  }
-
-  ngOnInit() {
   }
 
 }

@@ -27,6 +27,18 @@ namespace CFD.WebAPI.Controllers
             //_map = mapper;
             _dividaService = dividaService;
         }
+        // Listar Ultimas Dividas
+        [HttpGet("dividaLast")]
+        public async Task<IActionResult> GetUltimasDividasAdd() 
+        {
+            try {
+                var dividas = await _dividaService.GetUltimasDividasAdd();
+
+                return Ok(dividas);
+            }catch(System.Exception e) {
+                throw new ArgumentException($"DIVIDA: Erro ao listar ultimas. CODE: {e.Message}");
+            }
+        }
         // Listar Todos por Paginacao
         [HttpGet("pages/{page}")]
         public async Task<IActionResult> GetAllDividaPage(int page) 

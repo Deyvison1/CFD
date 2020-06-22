@@ -1,3 +1,135 @@
-<p>
-  divida works!
-</p>
+<div class="container">
+  <div style="padding-left: 60px; padding-right: 60px;" class="row justify-content-around">
+    <div style="height: 300px;" class="col-sm-7 border border-light border-0">
+      <p></p>
+      <p class="h3 text-center">Ultimas Dividas Adicionados</p>
+      <table width="100%" class="table table-hover text-center">
+        <thead>
+          <tr class="text-center">
+            <th>Titulo</th>
+            <th>Valor</th>
+            <th>Data Compra</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" *ngFor="let divida of dividaLast">
+            <td>{{divida.titulo}}</td>
+            <td>{{divida.valor | currency: 'R$ '}}</td>
+            <td>
+              {{divida.dataCompra | date: 'dd/mm/yyyy'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style=" margin-top: 10px; background-image: url(../../assets/imgFundo.png);"
+      class="col-sm border-dark rounded painelValores">
+      <div class="row" style=" min-width: 100px ;height: 210px; margin-top: 11px; " class="rounded">
+        <div class="row">
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center; " class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border border-dark rounded">
+                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Renda Bruta</p>
+                <p class="h4 text-success">{{valorespainel.rendaBruta | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center; " class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border border-dark rounded">
+                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Dividas Paga</p>
+                <p class="h4 text-success">{{valorespainel.valorTotalDividasPagas | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center;" class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
+                <p *ngIf="valorespainel.rendaLiquida < 0" style="height: 25px;" class="h6 bg-danger border border-danger rounded"><i class="fas fa-arrow-down"></i>&nbsp;Renda Liquida</p>
+                <p *ngIf="valorespainel.rendaLiquida > 0"  style="height: 25px;" class="h6 bg-success border border-secondary rounded"><i class="fas fa-arrow-up"></i>&nbsp; Renda Liquida</p>
+                <p *ngIf="valorespainel.rendaLiquida == 0"  style="height: 25px;" class="h6 bg-success border border-secondary rounded"><i class="fas fa-pause" aria-hidden="true"></i>&nbsp; Renda Liquida</p>
+                <p *ngIf="valorespainel.rendaLiquida >= 0" class="h4 text-success">{{valorespainel.rendaLiquida | currency: 'R$ '}}</p>
+                <p *ngIf="valorespainel.rendaLiquida < 0" class="h4 text-danger">{{valorespainel.rendaLiquida | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div style="height: 100px; text-align: center;" class="">
+              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
+                <p style="height: 25px;" class="h6 bg-danger border border-secondary rounded"><i class="fas fa-clock"></i>&nbsp; Dividas Pendentes</p>
+                <p class="h4 text-danger">{{valorespainel.valorTotalDividasPendentes | currency: 'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form>
+          <div style="width: 260px; position: absolute; bottom: 5px; left: 5px;" class="buscar">
+            <input [(ngModel)]="filtroLista" type="search" name="busca" class="form-control text-center" placeholder="Pesquisar">
+          </div>
+        </form>
+        <div style="width: 135px; position: absolute; bottom: 5px; right: 6px;" class="newItens">
+          <button class="btn btn-success text-center">Novo Usuario</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div style="background-color: #f0efef;" class="container">
+
+
+      <table width="100%" class="table table-hover text-left">
+        <thead>
+          <tr>
+            <th>Titulo</th>
+            <th>Valor</th>
+            <th>Data Compra</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let divida of dividasFiltradas | paginate: { itemsPerPage: itensPorPage, currentPage: pageAtual }">
+            <td>{{divida.titulo}}</td>
+            <td>{{divida.valor | currency: 'R$ '}}</td>
+            <td>{{divida.dataCompra | date: 'dd/mm/yyyy'}}</td>
+            <td class="text-center">
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-sm">
+                  <i class="fa fa-edit" aria-hidden="true"></i>&nbsp; Editar
+                </button>
+                <button class="btn btn-info btn-sm">
+                  <i class="fas fa-info"></i>&nbsp; Detalhes
+                </button>
+                <button class="btn btn-danger btn-sm">
+                  <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Deletar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="width: 370px; height: 30px; ;margin-top: 10px;" class="">
+        <pagination-controls (pageChange)="pageAtual = $event" previousLabel="Anterior"
+        nextLabel="Proximo"
+        ></pagination-controls>
+    </div>
+  </div>
+
+  <div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+            <h3>
+                Loading...
+            </h3>
+        </div>
+    </ng-template>
+      
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+
+
+
