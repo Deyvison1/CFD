@@ -7,6 +7,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // Declarations
 import { AppRoutingModule } from './app-routing.module';
@@ -41,13 +42,14 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
     ModalModule.forRoot(),
     NgxPaginationModule,
     NgxLoadingModule.forRoot({
-      animationType: ngxLoadingAnimationTypes.wanderingCubes,
-      backdropBackgroundColour: 'rgba(201, 201, 201, 0.3)',
-      backdropBorderRadius: '4px',
-      primaryColour: '#ffffff',
-      secondaryColour: '#ffffff',
-      tertiaryColour: '#ffffff'
-    })
+        animationType: ngxLoadingAnimationTypes.wanderingCubes,
+        backdropBackgroundColour: 'rgba(0,0,0,0.1)',
+        backdropBorderRadius: '4px',
+        primaryColour: '#ffffff',
+        secondaryColour: '#ffffff',
+        tertiaryColour: '#ffffff'
+    }),
+    TabsModule.forRoot()
   ],
   providers: [
     UserService

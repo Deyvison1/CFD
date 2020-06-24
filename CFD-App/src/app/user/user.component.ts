@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { User } from '../_models/User';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Divida } from '../_models/Divida';
 import { Renda } from '../_models/Renda';
 import { ValoresDividaAndRenda } from '../_models/ValoresDividaAndRenda';
+import { map } from 'rxjs/operators';
+import { DividaService } from '../_services/divida.service';
 
 @Component({
   selector: 'app-user',
@@ -18,13 +20,17 @@ export class UserComponent implements OnInit {
   usersFiltrados: User[] = [];
   user: User = new User();
   form: FormGroup;
+  postOrPot = '';
   _filtroLista = '';
   // --> Pages
   pageAtual = 1;
   qtdItensPorPage = 5;
   qtdPages: number;
+  // Dividas
+  dividasUser: Divida[] = [];
+  dividaUser: Divida = new Divida();
   // --> Painel
-  id = 1;
+  id = 14;
   valorePainel: ValoresDividaAndRenda = new ValoresDividaAndRenda();
   // Loading
   public loading = false;
@@ -42,7 +48,8 @@ export class UserComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dividaService: DividaService
   ) { }
 
   ngOnInit() {
@@ -67,16 +74,97 @@ export class UserComponent implements OnInit {
 
   validacao() {
     this.form = this.fb.group({
-      nome: [''],
-      email: [''],
-      senha: ['']
+      nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [ Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      papel: ['', [Validators.required, Validators.max(2), Validators.min(1)]],
+      dividas: this.fb.array([]),
+      rendas: this.fb.array([])
     });
   }
+  // POST AND PUT
+  inserir(inserir: any) {
+    this.postOrPot = 'post';
+    this.form.reset();
+    inserir.show();
+  }
+  editar(dados: any, _user: User) {
+    this.postOrPot = 'put';
+    this.form.reset();
+    dados.show();
+    this.user = _user;
+    this.form.patchValue(this.user);
+  }
+  salvarAlteracao(dados: any) {
+    if (this.form.valid) {
+    this.loading = true;
+      if (this.postOrPot === 'post') {
+        this.user = Object.assign({  }, this.form.value);
+        this.userService.post(this.user).subscribe(
+          (newUser: User) => {
+            dados.hide();
+            this.getAllUser();
+          }, error => {
+            console.log(`Erro ao Adicionar. CODE: ${error}`);
+          }
+        );
+      } else if (this.postOrPot === 'put') {
+        this.user = Object.assign({ id: this.user.id }, this.form.value);
+        this.userService.put(this.user).subscribe(
+          (editUser: User) => {
+            dados.hide();
+            this.getAllUser();
+          this.loading = false;
+          }, error => {
+            console.log(`Erro ao Atualizar. CODE: ${error}`);
+          this.loading = false;
+          }
+        );
+      } else {
+        console.log(`Não entrou em nenhum if`);
+        this.loading = false;
+      }
+    }
+  }
+  // DETAILS
+  detalhes(dados: any, _user: User) {
+    this.user = _user;
+    dados.show();
+    if (this.user) {
+      this.dividaService.getAllDividaByUserId(this.user.id).subscribe(
+        (data: Divida[]) => {
+          this.dividasUser = data;
+          console.log(data);
+        }, error => {
+          console.log('aqui parou');
+        }
+      );
+    } else {
+      console.log('deu errado');
+    }
+  }
+  // DELETE
+  delete(userDelete: User) {
+    this.loading = true;
+    this.user = userDelete;
+    if (this.user.id !== null) {
+      this.userService.delete(this.user.id).subscribe(
+        (data) => {
+          console.log('Deletado');
+          this.getAllUser();
+          this.loading = false;
+        }, error => {
+          console.log(`Erro ao deletar. CODE: ${error}`);
+          this.loading = false;
+        }
+      );
+    }
+  }
+  // GET
   qtdpagesUser() {
     this.userService.qtdPages().subscribe(
       data => {
         this.qtdPages = data;
-        console.log('deu certo');
       }, error => {
         console.log('Error');
       }
@@ -86,7 +174,6 @@ export class UserComponent implements OnInit {
     this.userService.getValoresPainel(id).subscribe(
       (data: ValoresDividaAndRenda) => {
         this.valorePainel = data;
-        console.log(data);
       }, error => {
         console.log(`Erro no listar valores do painel. CODE: ${error}`);
       }
@@ -96,7 +183,6 @@ export class UserComponent implements OnInit {
     return this.userService.getUltimosUsers().subscribe(
       (data: User[]) => {
         this.usersLast = data;
-        console.log(data);
       } , error => {
         console.log(error);
       }
@@ -108,7 +194,6 @@ export class UserComponent implements OnInit {
       (data: User[]) => {
         this.users = data;
         this.usersFiltrados = this.users;
-        console.log(data);
         this.loading = false;
       }, error => {
         console.log(`Erro ao listar. CODE: ${error}`);

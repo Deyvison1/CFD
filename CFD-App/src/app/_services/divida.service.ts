@@ -13,6 +13,11 @@ export class DividaService {
 
   constructor(private http: HttpClient) { }
 
+
+  // Listar Divida Por UserId
+  getAllDividaByUserId(id: number): Observable<Divida[]> {
+    return this.http.get<Divida[]>(`${this.baseURL}/dividaByUser/${id}`);
+  }
   // Valores Painel
   getValoresPainel(id: number) {
     return this.http.get(`${this.baseURLValores}${id}`);

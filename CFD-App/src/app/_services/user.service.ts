@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../_models/User';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ValoresDividaAndRenda } from '../_models/ValoresDividaAndRenda';
+import { Divida } from '../_models/Divida';
 
 
 @Injectable({
@@ -12,19 +13,20 @@ import { ValoresDividaAndRenda } from '../_models/ValoresDividaAndRenda';
 export class UserService {
 
   baseURL = 'http://localhost:5000/api/user';
-  baseURLValores = ' http://localhost:5000/api/divida/valorTotal/';
+  baseURLDividas = ' http://localhost:5000/api/divida';
 
   constructor(
     private http: HttpClient
   ) { }
 
   // Gets
+  // Listar Ultimos Adiconados
   getUltimosUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseURL}/userLast`);
   }
   // Valores Divida e Divida
   getValoresPainel(id: number) {
-    return this.http.get(`${this.baseURLValores}${id}`);
+    return this.http.get(`${this.baseURLDividas}/valorTotal/${id}`);
   }
   // Listar Todos Por Paginacao
   getAllUserPage(page: number): Observable<User[]> {

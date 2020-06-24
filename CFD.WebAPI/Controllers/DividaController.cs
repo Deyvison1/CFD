@@ -27,6 +27,20 @@ namespace CFD.WebAPI.Controllers
             //_map = mapper;
             _dividaService = dividaService;
         }
+        // Listar Por UserId
+        [HttpGet("dividaByUser/{id}")]
+        public async Task<IActionResult> GetAllDividaByUserId(int id)
+        {
+            try
+            {
+                var dividaByUserID = await _dividaService.GetAllDividaByUserId(id);
+
+                return Ok(dividaByUserID);
+            }catch(System.Exception e)
+            {
+                throw new ArgumentException($"DIVIDA: Erro ao listar por UserId. CODE: {e.Message}");
+            }
+        }
         // Listar Ultimas Dividas
         [HttpGet("dividaLast")]
         public async Task<IActionResult> GetUltimasDividasAdd() 

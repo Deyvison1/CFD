@@ -7,6 +7,6 @@ export class User {
   email: string;
   senha: string;
   papel: number;
-  Dividas: Divida[];
-  Rendas: Renda[];
+  dividas: Divida[];
+  rendas: Renda[];
 }

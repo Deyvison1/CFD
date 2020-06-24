@@ -34,7 +34,7 @@ namespace CFD.WebAPI._services
                 return result.ToArray();
             }catch(System.Exception e) 
             {
-                new ArgumentException($"USER: Erro ao listar ultimos adicionados. CODE: {e.Message}");
+                throw new ArgumentException($"USER: Erro ao listar ultimos adicionados. CODE: {e.Message}");
             }
             throw new ArgumentException();
         }

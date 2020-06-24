@@ -49,18 +49,14 @@ namespace CFD.Repositorio
         // Lista Todos Usuarios
         public async Task<User[]> GetAllUser()
         {
-            IQueryable<User> query = _context.Users
-                .Include(x => x.Rendas).Include(x => x.Dividas);
-
-            query = query.OrderByDescending(x => x.Id);
-            return await query.ToArrayAsync();
+            return await _context.Users.OrderBy(x => x.Id).ToArrayAsync();
         }
-        // Listar User por Id para Servicos
+        // Listar User por Id para Servicos de put e delete
         public async Task<User> GetUserById(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
-        // Lista User Por ID
+        // Lista User Por ID para servicos de detalhes
         public async Task<User[]> GetUserByIdAndDividasAndRendas(int id)
         {
             return await _context.Users.Where(
@@ -142,6 +138,11 @@ namespace CFD.Repositorio
                 x.Descricao.ToLower().Contains(buscar.ToLower())
             );
             return await result.ToArrayAsync();
+        }
+
+        public async Task<Divida[]> GetAllDividaByUserId(int id)
+        {
+            return await _context.Dividas.Where(x => x.UserId == id).OrderByDescending(x => x.Id).ToArrayAsync();
         }
     }
 }

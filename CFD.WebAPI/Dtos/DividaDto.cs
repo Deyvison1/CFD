@@ -13,6 +13,7 @@ namespace CFD.WebAPI.Dtos
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DataCompra { get; set; }
+        [DataType(DataType.Date)]
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DataRegistro { get; set; }

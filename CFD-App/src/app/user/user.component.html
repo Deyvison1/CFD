@@ -1,5 +1,8 @@
 <div class="container">
-  <div style="padding-left: 60px; padding-right: 60px;" class="row justify-content-around">
+  <div
+    style="padding-left: 60px; padding-right: 60px;"
+    class="row justify-content-around"
+  >
     <div style="height: 300px;" class="col-sm-7 border border-light border-0">
       <p></p>
       <p class="h3 text-center">Ultimos Usuarios Adicionados</p>
@@ -13,33 +16,66 @@
         </thead>
         <tbody>
           <tr class="text-center" *ngFor="let user of usersLast">
-            <td>{{user.nome}}</td>
-            <td>{{user.email}}</td>
+            <td>{{ user.nome }}</td>
+            <td>{{ user.email }}</td>
             <td class="text-center">
-              <button *ngIf="user.papel == 1" class="btn btn-success"><i class="fas fa-crown"></i> </button>
-              <button *ngIf="user.papel == 2" class="btn btn-secondary"><i class="fas fa-user"></i> </button>
+              <button *ngIf="user.papel == 1" class="btn btn-success">
+                <i class="fas fa-crown"></i>
+              </button>
+              <button *ngIf="user.papel == 2" class="btn btn-secondary">
+                <i class="fas fa-user"></i>
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div style=" margin-top: 10px; background-image: url(../../assets/imgFundo.png);"
-      class="col-sm border-dark rounded painelValores">
-      <div class="row" style=" min-width: 100px ;height: 210px; margin-top: 11px; " class="rounded">
+    <div
+      style="
+        margin-top: 10px;
+        background-image: url(../../assets/imgFundo.png);
+      "
+      class="col-sm border-dark rounded painelValores"
+    >
+      <div
+        class="row"
+        style="min-width: 100px; height: 210px; margin-top: 11px;"
+        class="rounded"
+      >
         <div class="row">
           <div class="col-sm">
-            <div style="height: 100px; text-align: center; " class="">
-              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border border-dark rounded">
-                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Renda Bruta</p>
-                <p class="h4 text-success">{{valorePainel.rendaBruta | currency: 'R$ '}}</p>
+            <div style="height: 100px; text-align: center;" class="">
+              <div
+                style="margin-top: 15px; background-color: #d6d3d3;"
+                class="border border-dark rounded"
+              >
+                <p
+                  style="height: 25px;"
+                  class="h6 bg-success border border-secondary rounded"
+                >
+                  Renda Bruta
+                </p>
+                <p class="h4 text-success">
+                  {{ valorePainel.rendaBruta | currency: "R$ " }}
+                </p>
               </div>
             </div>
           </div>
           <div class="col-sm">
-            <div style="height: 100px; text-align: center; " class="">
-              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border border-dark rounded">
-                <p style="height: 25px;" class="h6 bg-success border border-secondary rounded">Dividas Paga</p>
-                <p class="h4 text-success">{{valorePainel.valorTotalDividasPagas | currency: 'R$ '}}</p>
+            <div style="height: 100px; text-align: center;" class="">
+              <div
+                style="margin-top: 15px; background-color: #d6d3d3;"
+                class="border border-dark rounded"
+              >
+                <p
+                  style="height: 25px;"
+                  class="h6 bg-success border border-secondary rounded"
+                >
+                  Dividas Paga
+                </p>
+                <p class="h4 text-success">
+                  {{ valorePainel.valorTotalDividasPagas | currency: "R$ " }}
+                </p>
               </div>
             </div>
           </div>
@@ -47,41 +83,94 @@
         <div class="row">
           <div class="col-sm">
             <div style="height: 100px; text-align: center;" class="">
-              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
-                <p *ngIf="valorePainel.rendaLiquida < 0" style="height: 25px;" class="h6 bg-danger border border-danger rounded"><i class="fas fa-arrow-down"></i>&nbsp;Renda Liquida</p>
-                <p *ngIf="valorePainel.rendaLiquida > 0"  style="height: 25px;" class="h6 bg-success border border-secondary rounded"><i class="fas fa-arrow-up"></i>&nbsp; Renda Liquida</p>
-                <p *ngIf="valorePainel.rendaLiquida == 0"  style="height: 25px;" class="h6 bg-success border border-secondary rounded"><i class="fas fa-pause" aria-hidden="true"></i>&nbsp; Renda Liquida</p>
-                <p *ngIf="valorePainel.rendaLiquida >= 0" class="h4 text-success">{{valorePainel.rendaLiquida | currency: 'R$ '}}</p>
-                <p *ngIf="valorePainel.rendaLiquida < 0" class="h4 text-danger">{{valorePainel.rendaLiquida | currency: 'R$ '}}</p>
+              <div
+                style="margin-top: 15px; background-color: #d6d3d3;"
+                class="border bg border-dark rounded"
+              >
+                <p
+                  *ngIf="valorePainel.rendaLiquida < 0"
+                  style="height: 25px;"
+                  class="h6 bg-danger border border-danger rounded"
+                >
+                  <i class="fas fa-arrow-down"></i>&nbsp;Renda Liquida
+                </p>
+                <p
+                  *ngIf="valorePainel.rendaLiquida > 0"
+                  style="height: 25px;"
+                  class="h6 bg-success border border-secondary rounded"
+                >
+                  <i class="fas fa-arrow-up"></i>&nbsp; Renda Liquida
+                </p>
+                <p
+                  *ngIf="valorePainel.rendaLiquida == 0"
+                  style="height: 25px;"
+                  class="h6 bg-success border border-secondary rounded"
+                >
+                  <i class="fas fa-pause" aria-hidden="true"></i>&nbsp; Renda
+                  Liquida
+                </p>
+                <p
+                  *ngIf="valorePainel.rendaLiquida >= 0"
+                  class="h4 text-success"
+                >
+                  {{ valorePainel.rendaLiquida | currency: "R$ " }}
+                </p>
+                <p *ngIf="valorePainel.rendaLiquida < 0" class="h4 text-danger">
+                  {{ valorePainel.rendaLiquida | currency: "R$ " }}
+                </p>
               </div>
             </div>
           </div>
           <div class="col-sm">
             <div style="height: 100px; text-align: center;" class="">
-              <div style="margin-top: 15px; background-color: #d6d3d3;" class="border bg border-dark rounded">
-                <p style="height: 25px;" class="h6 bg-danger border border-secondary rounded"><i class="fas fa-clock"></i>&nbsp; Dividas Pendentes</p>
-                <p class="h4 text-danger">{{valorePainel.valorTotalDividasPendentes | currency: 'R$ '}}</p>
+              <div
+                style="margin-top: 15px; background-color: #d6d3d3;"
+                class="border bg border-dark rounded"
+              >
+                <p
+                  style="height: 25px;"
+                  class="h6 bg-danger border border-secondary rounded"
+                >
+                  <i class="fas fa-clock"></i>&nbsp; Dividas Pendentes
+                </p>
+                <p class="h4 text-danger">
+                  {{
+                    valorePainel.valorTotalDividasPendentes | currency: "R$ "
+                  }}
+                </p>
               </div>
             </div>
           </div>
         </div>
         <form>
-          <div style="width: 260px; position: absolute; bottom: 5px; left: 5px;" class="buscar">
-            <input [(ngModel)]="filtroLista" type="search" name="busca" class="form-control text-center" placeholder="Pesquisar">
+          <div
+            style="width: 260px; position: absolute; bottom: 5px; left: 5px;"
+            class="buscar"
+          >
+            <input
+              [(ngModel)]="filtroLista"
+              type="search"
+              name="busca"
+              class="form-control text-center"
+              placeholder="Pesquisar"
+            />
           </div>
         </form>
-        <div style="width: 135px; position: absolute; bottom: 5px; right: 6px;" class="newItens">
-          <button class="btn btn-success text-center">Novo Usuario</button>
+        <div
+          style="width: 167 px; position: absolute; bottom: 6px; right: 3px;"
+          class="newItens"
+        >
+          <button
+            class="btn btn-success text-center"
+            (click)="inserir(insertAndUpdate)"
+          >
+            <i class="fa fa-plus-circle"></i>&nbsp; Novo Usuario
+          </button>
         </div>
       </div>
     </div>
 
-
-
-
     <div style="background-color: #f0efef;" class="container">
-
-
       <table width="100%" class="table table-hover text-left">
         <thead>
           <tr>
@@ -92,19 +181,30 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of usersFiltrados | paginate: { itemsPerPage: 7, currentPage: pageAtual }">
-            <td>{{user.nome}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.senha}}</td>
+          <tr
+            *ngFor="
+              let user of usersFiltrados
+                | paginate: { itemsPerPage: 7, currentPage: pageAtual }
+            "
+          >
+            <td>{{ user.nome }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.senha }}</td>
             <td class="text-center">
               <div class="btn-group">
-                <button class="btn btn-secondary btn-sm">
+                <button
+                  class="btn btn-secondary btn-sm"
+                  (click)="editar(insertAndUpdate, user)"
+                >
                   <i class="fa fa-edit" aria-hidden="true"></i>&nbsp; Editar
                 </button>
-                <button class="btn btn-info btn-sm">
+                <button
+                  class="btn btn-info btn-sm"
+                  (click)="detalhes(details, user)"
+                >
                   <i class="fas fa-info"></i>&nbsp; Detalhes
                 </button>
-                <button class="btn btn-danger btn-sm">
+                <button class="btn btn-danger btn-sm" (click)="delete(user)">
                   <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Deletar
                 </button>
               </div>
@@ -112,25 +212,348 @@
           </tr>
         </tbody>
       </table>
-      </div>
-      <div style="width: 370px; height: 30px; ;margin-top: 10px;" class="">
-        <pagination-controls (pageChange)="pageAtual = $event" previousLabel="Anterior"
+    </div>
+    <div
+      style="width: 370px; height: 30px; margin-top: 10px;"
+      class="text-center"
+    >
+      <pagination-controls
+        (pageChange)="pageAtual = $event"
+        previousLabel="Anterior"
         nextLabel="Proximo"
-        ></pagination-controls>
+      ></pagination-controls>
+
+      <div class="my-container">
+        <ng-template #customLoadingTemplate>
+          <div class="custom-class">
+            <h1>
+              Carregando...
+            </h1>
+          </div>
+        </ng-template>
+
+        <ngx-loading
+          [show]="loading"
+          [config]="{ backdropBorderRadius: '3px' }"
+          [template]="customLoadingTemplate"
+        ></ngx-loading>
+      </div>
+
+      
+    </div>
+    <!-- Modal Insert And Update -->
+    <div
+      bsModal
+      #insertAndUpdate="bs-modal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="dialog-sizes-name1"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+              Editar
+            </h4>
+            <button
+              type="button"
+              class="close pull-right"
+              (click)="insertAndUpdate.hide()"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="form">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Nome</label>
+                  <input
+                    autofocus
+                    type="text"
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('nome').errors && form.get('nome').touched
+                    }"
+                    class="form-control"
+                    formControlName="nome"
+                    placeholder="Nome"
+                  />
+                  <div
+                    *ngIf="
+                      form.get('nome').hasError('required') &&
+                      form.get('nome').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo Obrigatório
+                  </div>
+                  <div
+                    *ngIf="
+                      form.get('nome').hasError('minlength') &&
+                      form.get('nome').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo deve ter entre 2 a 60 caracteres
+                  </div>
+                  <div
+                    *ngIf="
+                      form.get('nome').hasError('maxlength') &&
+                      form.get('nome').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo deve ter entre 2 a 60 caracteres
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>E-mail</label>
+                  <input
+                    type="email"
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('email').errors && form.get('email').touched
+                    }"
+                    class="form-control"
+                    formControlName="email"
+                    placeholder="E-mail"
+                  />
+                  <div
+                    *ngIf="
+                      form.get('email').hasError('required') &&
+                      form.get('email').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo Obrigatório
+                  </div>
+                  <div
+                    *ngIf="
+                      form.get('email').hasError('email') &&
+                      form.get('email').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    E-mail deve ser valido.
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Senha</label>
+                  <input
+                    type="password"
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('senha').errors && form.get('senha').touched
+                    }"
+                    class="form-control"
+                    formControlName="senha"
+                    placeholder="Senha"
+                  />
+                  <div
+                    *ngIf="
+                      form.get('senha').hasError('maxlength') &&
+                      form.get('senha').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo deve ter entre 4 a 20 caracteres.
+                  </div>
+                  <div
+                    *ngIf="
+                      form.get('senha').hasError('minlength') &&
+                      form.get('senha').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo deve ter entre 4 a 20 caracteres.
+                  </div>
+                  <div
+                    *ngIf="
+                      form.get('senha').hasError('required') &&
+                      form.get('senha').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo Obrigatório
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Nivel Usuario</label>
+                  <select
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('papel').errors && form.get('papel').touched
+                    }"
+                    formControlName="papel"
+                  >
+                    <option value="1">Administrador</option>
+                    <option value="2">Usuario</option>
+                  </select>
+                  <div
+                    *ngIf="
+                      form.get('papel').hasError('required') &&
+                      form.get('papel').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Campo Obrigatório
+                  </div>
+                  <div
+                    *ngIf="
+                      form.get('papel').hasError('max') &&
+                      form.get('papel').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Valor Maximo e 2.
+                  </div>
+                  <div
+                    *ngIf="
+                      form.get('papel').hasError('min') &&
+                      form.get('papel').touched
+                    "
+                    class="invalid-feedback"
+                  >
+                    Valor Minimo e 1.
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer d-flex">
+            <button class="btn btn-secondary" (click)="insertAndUpdate.hide()">
+              Fechar
+            </button>
+            <button
+              class="btn btn-primary ml-auto"
+              [disabled]="!form.valid"
+              (click)="salvarAlteracao(insertAndUpdate)"
+            >
+              Salvar Alterações
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="my-container">
-    <ng-template #customLoadingTemplate>
-        <div class="custom-class">
-            <h3>
-                Loading...
-            </h3>
-        </div>
-    </ng-template>
-      
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
 </div>
 
+<!--  Details Complete -->
 
-
+<div
+  bsModal
+  #details="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name1"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+          Detalhes Usuario {{user.nome | titlecase}}
+        </h4>
+        <button
+          type="button"
+          class="close pull-right"
+          (click)="details.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <tabset>
+          <tab heading="Usuario" id="tab1">
+            <table class="table table-striped table-hover text-center">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Senha</th>
+                  <th>Papel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{user.nome | titlecase}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.senha}}</td>
+                  <td>
+                    <button *ngIf="user.papel == 1" class="btn btn-success">
+                      <i class="fas fa-crown"></i>
+                    </button>
+                    <button *ngIf="user.papel == 2" class="btn btn-secondary">
+                      <i class="fas fa-user"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </tab>
+          <tab heading="Dividas">
+            <table width="100%" class="text-center table table-striped table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Titulo</th>
+                  <th>Valor</th>
+                  <th>Data Compra</th>
+                  <th>Situacao</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let dividaUser of dividasUser">
+                  <td>{{dividaUser.titulo | titlecase}}</td>
+                  <td>{{dividaUser.valor | currency: 'R$ '}}</td>
+                  <td>{{dividaUser.dataCompra | date: 'dd/mm/yyyy hh:mm'}}</td>
+                  <td>
+                    <button *ngIf="dividaUser.situacao == 1" class="btn btn-success">Paga</button>
+                    <button *ngIf="dividaUser.situacao == 0" class="btn btn-danger">Pendente</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </tab>
+          <tab heading="Rendas">
+            <table width="100%" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Titulo</th>
+                  <th>Tipo</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button *ngIf="user.papel == 1" class="btn btn-success">
+                      <i class="fas fa-crown"></i>
+                    </button>
+                    <button *ngIf="user.papel == 2" class="btn btn-secondary">
+                      <i class="fas fa-user"></i>
+                    </button>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </tab>
+        </tabset>
+      </div>
+      <div class="modal-footer d-flex">
+        <button class="btn btn-secondary" (click)="details.hide()">
+          Fechar
+        </button>
+      </div>
+    </div>
+    
+  </div>
+</div>
