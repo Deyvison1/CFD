@@ -13,6 +13,10 @@ export class RendaService {
 
   constructor(private http: HttpClient) { }
 
+  // Listar Por UserId
+  getAllRendaByUserId(id: number): Observable<Renda[]> {
+    return this.http.get<Renda[]>(`${this.baseURL}/detalhes/${id}`);
+  }
   // Valores do Painel
   getPainelValores(id: number) {
     return this.http.get(`${this.baseURLValores}${id}`);

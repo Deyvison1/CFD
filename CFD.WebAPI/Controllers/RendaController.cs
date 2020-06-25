@@ -17,7 +17,19 @@ namespace CFD.WebAPI.Controllers
     {
         private readonly RendaService _rendaService;
         public RendaController(RendaService rendaService) { _rendaService = rendaService; }
+        // Listar Por UserId
+        [HttpGet("detalhes/{id}")]
+        public async Task<IActionResult> GetAllRendaByUserId(int id) 
+        {
+            try {
+                var rendaByUserId = await _rendaService.GetAllRendaByUserId(id);
 
+                return Ok(rendaByUserId);
+
+            }catch(System.Exception e){
+                throw new ArgumentException($"RENDA: Erro ao listar todos por paginacao. CODE: {e.Message}");
+            }
+        }
         //Listar Todos por Paginacao
         [HttpGet("pages/{page}")]
         public async Task<IActionResult> GetAllRendaPage(int page) 

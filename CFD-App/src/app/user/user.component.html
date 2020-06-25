@@ -226,9 +226,9 @@
       <div class="my-container">
         <ng-template #customLoadingTemplate>
           <div class="custom-class">
-            <h1>
+            <h5>
               Carregando...
-            </h1>
+            </h5>
           </div>
         </ng-template>
 
@@ -512,7 +512,7 @@
                 <tr *ngFor="let dividaUser of dividasUser">
                   <td>{{dividaUser.titulo | titlecase}}</td>
                   <td>{{dividaUser.valor | currency: 'R$ '}}</td>
-                  <td>{{dividaUser.dataCompra | date: 'dd/mm/yyyy hh:mm'}}</td>
+                  <td>{{dividaUser.dataCompra | date: 'dd/MM/yyyy hh:mm'}}</td>
                   <td>
                     <button *ngIf="dividaUser.situacao == 1" class="btn btn-success">Paga</button>
                     <button *ngIf="dividaUser.situacao == 0" class="btn btn-danger">Pendente</button>
@@ -522,26 +522,28 @@
             </table>
           </tab>
           <tab heading="Rendas">
-            <table width="100%" class="table table-striped table-hover">
-              <thead>
+            <table width="100%" class="table table-striped table-hover text-center">
+              <thead class="thead-dark">
                 <tr>
                   <th>Titulo</th>
-                  <th>Tipo</th>
                   <th>Valor</th>
+                  <th>Data Renda</th>
+                  <th>Tipo</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
+                <tr *ngFor="let rendaUser of rendasUser">
+                  <td>{{rendaUser.titulo | titlecase}}</td>
+                  <td>{{rendaUser.valor | currency: 'R$ '}}</td>
+                  <td>{{rendaUser.dataRenda | date: 'dd/MM/yyyy hh:mm'}}</td>
                   <td>
-                    <button *ngIf="user.papel == 1" class="btn btn-success">
-                      <i class="fas fa-crown"></i>
+                    <button *ngIf="rendaUser.tipo == 1" class="btn btn-success">
+                      Diaria
                     </button>
-                    <button *ngIf="user.papel == 2" class="btn btn-secondary">
-                      <i class="fas fa-user"></i>
+                    <button *ngIf="rendaUser.tipo == 0" class="btn btn-secondary">
+                      Mensal
                     </button>
                   </td>
-                  <td></td>
                 </tr>
               </tbody>
             </table>

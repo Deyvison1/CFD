@@ -13,7 +13,18 @@ namespace CFD.WebAPI._services
         private readonly ICFDRepositorio _repo;
         private readonly IMapper _map;
         public RendaService(ICFDRepositorio repo, IMapper map) { _repo = repo; _map = map; }
+        // Listar Por UserId
+        public async Task<RendaDto[]> GetAllRendaByUserId(int id) {
+            try {
+                var rendaByUserId = await _repo.GetAllRendaByUserId(id);
 
+                var rendaByUserIdDto = _map.Map<RendaDto[]>(rendaByUserId);
+
+                return rendaByUserIdDto.ToArray();
+            }catch(System.Exception e) {
+                throw new ArgumentException($"RENDA: Erro ao listar por UserId. CODE: {e.Message}");
+            }
+        }
         // Listar Ultimos Adicionados
         public async Task<RendaDto[]> GetUltimosRendaAdd() 
         {

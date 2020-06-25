@@ -1,4 +1,4 @@
-<nav style="min-width: 1100px;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav style="min-width: 1100px;" class="navbar navbar-expand navbar-dark bg-dark">
   <!--
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,23 +19,25 @@
           -->
         </ul>
       </div>
+      <div style="margin-right: 6px;">
       <ul class="navbar-nav">
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          <a dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Vinícius
           </a>
           <div *dropdownMenu class="dropdown-menu aqui" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#">
-              Perfil
+              <i class="fa fa-user" aria-hidden="true"></i>&nbsp; Perfil
             </a>
             <div role="separator" class="divider"></div>
             <a class="dropdown-item" href="#">
-              Sair
+              <i class="fas fa-sign-out-alt" aria-hidden="true"></i>&nbsp; Sair
             </a>
           </div>
         </li>
       </ul>
+    </div>
     </nav>
 <div style="background-color: #343a40;" id="mySidenav" class="sidenav active">
   <div class="text-center">

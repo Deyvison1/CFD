@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using CFD.Dominio;
 
@@ -13,6 +14,8 @@ namespace CFD.WebAPI.Dtos
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         [Range(0,1, ErrorMessage = "{0} deve ser 0 ou 1.")]
         public int Tipo         { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime DataRenda { get; set; }
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:c}")]

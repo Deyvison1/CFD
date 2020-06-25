@@ -8,6 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ToastrModule } from 'ngx-toastr';
 
 // Declarations
 import { AppRoutingModule } from './app-routing.module';
@@ -49,7 +50,8 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         secondaryColour: '#ffffff',
         tertiaryColour: '#ffffff'
     }),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   providers: [
     UserService

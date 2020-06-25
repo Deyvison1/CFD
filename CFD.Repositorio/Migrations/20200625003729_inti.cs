@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CFD.Repositorio.Migrations
 {
-    public partial class init : Migration
+    public partial class inti : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,7 @@ namespace CFD.Repositorio.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Titulo = table.Column<string>(nullable: true),
                     Tipo = table.Column<int>(nullable: false),
+                    DataRenda = table.Column<DateTime>(nullable: false),
                     Valor = table.Column<decimal>(nullable: false),
                     Descricao = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false)

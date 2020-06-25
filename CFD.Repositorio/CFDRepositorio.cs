@@ -144,5 +144,14 @@ namespace CFD.Repositorio
         {
             return await _context.Dividas.Where(x => x.UserId == id).OrderByDescending(x => x.Id).ToArrayAsync();
         }
+
+        public async Task<Renda[]> GetAllRendaByUserId(int id)
+        {
+            return await _context.Rendas.Where(
+                x => x.UserId == id
+            ).OrderByDescending(
+                x => x.Id
+            ).ToArrayAsync();
+        }
     }
 }

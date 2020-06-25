@@ -41,6 +41,8 @@ namespace CFD.Repositorio
         // Listar por Titulo, Descricao do Produto, Valor
         Task<Divida[]> GetDividaByTituloOrDescricaoProdutoOrValor(string buscar);
         // ----> Renda
+        // Listar Por UserId
+        Task<Renda[]> GetAllRendaByUserId(int id);
         // Listar Todas por Pginacao
         Task<Renda[]> GetAllRendaPaginacao(int page);
         // Listar Todas

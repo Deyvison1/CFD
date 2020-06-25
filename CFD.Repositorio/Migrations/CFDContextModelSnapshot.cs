@@ -58,6 +58,8 @@ namespace CFD.Repositorio.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("DataRenda");
+
                     b.Property<string>("Descricao");
 
                     b.Property<int>("Tipo");

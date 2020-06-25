@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CFD.Repositorio.Migrations
 {
     [DbContext(typeof(CFDContext))]
-    [Migration("20200621040142_init")]
-    partial class init
+    [Migration("20200625003729_inti")]
+    partial class inti
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,6 +59,8 @@ namespace CFD.Repositorio.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DataRenda");
 
                     b.Property<string>("Descricao");
 

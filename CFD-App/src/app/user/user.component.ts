@@ -7,6 +7,8 @@ import { Renda } from '../_models/Renda';
 import { ValoresDividaAndRenda } from '../_models/ValoresDividaAndRenda';
 import { map } from 'rxjs/operators';
 import { DividaService } from '../_services/divida.service';
+import { ToastrService } from 'ngx-toastr';
+import { RendaService } from '../_services/renda.service';
 
 @Component({
   selector: 'app-user',
@@ -29,8 +31,11 @@ export class UserComponent implements OnInit {
   // Dividas
   dividasUser: Divida[] = [];
   dividaUser: Divida = new Divida();
+  // Rendas
+  rendasUser: Renda[] = [];
+  rendaUser: Renda = new Renda();
   // --> Painel
-  id = 14;
+  id = 1;
   valorePainel: ValoresDividaAndRenda = new ValoresDividaAndRenda();
   // Loading
   public loading = false;
@@ -49,7 +54,9 @@ export class UserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private dividaService: DividaService
+    private dividaService: DividaService,
+    private toastr: ToastrService,
+    private rendaService: RendaService
   ) { }
 
   ngOnInit() {
@@ -103,9 +110,12 @@ export class UserComponent implements OnInit {
         this.userService.post(this.user).subscribe(
           (newUser: User) => {
             dados.hide();
+            this.toastr.success('Sucesso no Cadastro');
             this.getAllUser();
+            this.getUltimosUsers();
+            this.loading = false;
           }, error => {
-            console.log(`Erro ao Adicionar. CODE: ${error}`);
+            this.toastr.error(`Erro no Cadastro: ${error}`);
           }
         );
       } else if (this.postOrPot === 'put') {
@@ -113,11 +123,13 @@ export class UserComponent implements OnInit {
         this.userService.put(this.user).subscribe(
           (editUser: User) => {
             dados.hide();
+            this.toastr.success('Sucesso no Atualizar');
             this.getAllUser();
-          this.loading = false;
+            this.getUltimosUsers();
+            this.loading = false;
           }, error => {
-            console.log(`Erro ao Atualizar. CODE: ${error}`);
-          this.loading = false;
+            this.toastr.success(`Erro no Atualizar. CODE: ${error}`);
+            this.loading = false;
           }
         );
       } else {
@@ -134,9 +146,15 @@ export class UserComponent implements OnInit {
       this.dividaService.getAllDividaByUserId(this.user.id).subscribe(
         (data: Divida[]) => {
           this.dividasUser = data;
-          console.log(data);
+          this.rendaService.getAllRendaByUserId(this.user.id).subscribe(
+            (renda: Renda[]) => {
+              this.rendasUser = renda;
+            }, error => {
+              this.toastr.error(`Erro no detalhes de renda. CODE: ${error}`);
+            }
+          );
         }, error => {
-          console.log('aqui parou');
+          this.toastr.error(`Erro no detalhes de dividas. CODE: ${error}`);
         }
       );
     } else {
@@ -152,6 +170,7 @@ export class UserComponent implements OnInit {
         (data) => {
           console.log('Deletado');
           this.getAllUser();
+          this.getUltimosUsers();
           this.loading = false;
         }, error => {
           console.log(`Erro ao deletar. CODE: ${error}`);
@@ -183,7 +202,7 @@ export class UserComponent implements OnInit {
     return this.userService.getUltimosUsers().subscribe(
       (data: User[]) => {
         this.usersLast = data;
-      } , error => {
+      }, error => {
         console.log(error);
       }
     );
