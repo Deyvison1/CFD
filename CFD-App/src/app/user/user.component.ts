@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
   rendasUser: Renda[] = [];
   rendaUser: Renda = new Renda();
   // --> Painel
-  id = 1;
+  id = 2;
   valorePainel: ValoresDividaAndRenda = new ValoresDividaAndRenda();
   // Loading
   public loading = false;

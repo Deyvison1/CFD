@@ -8,7 +8,7 @@ namespace CFD.WebAPI.Dtos
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "{0} é obrigatorio!")]
-        [StringLength(170, MinimumLength = 2, ErrorMessage = "{0} deve ter entre 2 a 170 caracteres.")]
+        [StringLength(80, MinimumLength = 2, ErrorMessage = "{0} deve ter entre 2 a 170 caracteres.")]
         public string Titulo    { get; set; }
         // 0 = Mensal, 1 = Diaria
         [Required(ErrorMessage = "{0} é obrigatorio!")]

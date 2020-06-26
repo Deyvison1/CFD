@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RendaService } from '../_services/renda.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Renda } from '../_models/Renda';
 import { ValoresDividaAndRenda } from '../_models/ValoresDividaAndRenda';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-renda',
@@ -15,8 +16,9 @@ export class RendaComponent implements OnInit {
   rendas: Renda[] = [];
   rendasLast: Renda[] = [];
   rendasFiltradas: Renda[] = [];
-  id = 1;
+  id = 2;
   form: FormGroup;
+  metodoSalvar = '';
 
   // Pages
   pageAtual = 1;
@@ -37,10 +39,12 @@ export class RendaComponent implements OnInit {
 
   constructor(
     private rendaService: RendaService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
     ) { }
 
   ngOnInit() {
+    this.validacao();
     this.getAll();
     this.getValoresPainel();
     this.getUltimasRendasAdd();
@@ -60,10 +64,65 @@ export class RendaComponent implements OnInit {
 
   validacao() {
     this.form = this.fb.group({
-      titulo: [''],
-      valor: [''],
+      titulo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(80)]],
+      tipo: ['', [Validators.required, Validators.min(0), Validators.max(1)]],
+      dataRenda: ['', [Validators.required]],
+      valor: ['', Validators.required],
       descricao: ['']
     });
+  }
+  abrirModal(dados: any) {
+    this.form.reset();
+    dados.show();
+  }
+  // POST
+  inserir(dados: any) {
+    this.metodoSalvar = 'post';
+    this.abrirModal(dados);
+  }
+  // PUT
+  editar(dados: any, _renda: Renda) {
+    this.metodoSalvar = 'put';
+    this.abrirModal(dados);
+    this.renda = _renda;
+    this.form.patchValue(this.renda);
+  }
+  salvarAlteracao(dados: any) {
+    if (this.form.valid) {
+      this.loading = true;
+      if (this.metodoSalvar === 'post') {
+        this.renda = Object.assign({ }, this.form.value);
+
+        this.renda.userId = 2;
+        this.rendaService.post(this.renda).subscribe(
+          (data: Renda) => {
+            dados.hide();
+            this.toastr.success('Sucesso no Cadastro');
+            this.getAll();
+            this.getUltimasRendasAdd();
+            this.loading = false;
+          }, error => {
+            this.toastr.error(`Erro no Cadastro. CODE: ${error}`);
+          }
+        );
+      } else if (this.metodoSalvar === 'put') {
+        this.renda = Object.assign({ id: this.renda.id }, this.form.value);
+        this.renda.userId = 2;
+        this.rendaService.put(this.renda).subscribe(
+          (data: Renda) => {
+            dados.hide();
+            this.toastr.success('Sucesso na Atualizacao');
+            this.getAll();
+            this.getUltimasRendasAdd();
+            this.loading = false;
+          }, error => {
+            this.toastr.error(`Erro no Atualizar. CODE: ${error}`);
+          }
+        );
+      } else {
+        this.toastr.error('Não e put nem post. Erro');
+      }
+    }
   }
 
   getUltimasRendasAdd() {

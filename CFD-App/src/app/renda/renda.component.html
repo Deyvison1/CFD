@@ -16,8 +16,8 @@
             <td>{{renda.titulo}}</td>
             <td>{{renda.valor | currency: 'R$ '}}</td>
             <td>
-              <button *ngIf="renda.tipo == 1" class="btn btn-success">Mensal</button>
-              <button *ngIf="renda.tipo == 2" class="btn btn-secondary">Diaria</button>
+              <button *ngIf="renda.tipo == 0" class="btn btn-success">Mensal</button>
+              <button *ngIf="renda.tipo == 1" class="btn btn-secondary">Diaria</button>
             </td>
           </tr>
         </tbody>
@@ -71,7 +71,7 @@
           </div>
         </form>
         <div style="width: 135px; position: absolute; bottom: 5px; right: 6px;" class="newItens">
-          <button class="btn btn-success text-center">Novo Usuario</button>
+          <button class="btn btn-success text-center" (click)="inserir(insertAndUpdate)">Novo Usuario</button>
         </div>
       </div>
     </div>
@@ -98,7 +98,7 @@
             <td>{{renda.descricao}}</td>
             <td class="text-center">
               <div class="btn-group">
-                <button class="btn btn-secondary btn-sm">
+                <button class="btn btn-secondary btn-sm" (click)="editar(insertAndUpdate , renda)">
                   <i class="fa fa-edit" aria-hidden="true"></i>&nbsp; Editar
                 </button>
                 <button class="btn btn-info btn-sm">
@@ -132,5 +132,189 @@
     <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
 </div>
 
+
+<div
+bsModal
+#insertAndUpdate="bs-modal"
+class="modal fade"
+tabindex="-1"
+role="dialog"
+aria-labelledby="dialog-sizes-name1"
+>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+        Editar
+      </h4>
+      <button
+        type="button"
+        class="close pull-right"
+        (click)="insertAndUpdate.hide()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Titulo</label>
+            <input
+              autofocus
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('titulo').errors && form.get('titulo').touched
+              }"
+              class="form-control"
+              formControlName="titulo"
+              placeholder="Titulo"
+            />
+            <div
+              *ngIf="
+                form.get('titulo').hasError('required') &&
+                form.get('titulo').touched
+              "
+              class="invalid-feedback"
+            >
+              Campo Obrigatório
+            </div>
+            <div
+              *ngIf="
+                form.get('titulo').hasError('minlength') &&
+                form.get('titulo').touched
+              "
+              class="invalid-feedback"
+            >
+              Campo deve ter entre 2 a 80 caracteres
+            </div>
+            <div
+              *ngIf="
+                form.get('titulo').hasError('maxlength') &&
+                form.get('titulo').touched
+              "
+              class="invalid-feedback"
+            >
+              Campo deve ter entre 2 a 80 caracteres
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Data Renda</label>
+            <input
+              type="datetime-local"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('dataRenda').errors && form.get('dataRenda').touched
+              }"
+              class="form-control"
+              formControlName="dataRenda"
+              placeholder="Data da Renda"
+            />
+            <div
+              *ngIf="
+                form.get('dataRenda').hasError('required') &&
+                form.get('dataRenda').touched
+              "
+              class="invalid-feedback"
+            >
+              Campo Obrigatório
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Valor</label>
+            <input
+              type="number"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('valor').errors && form.get('valor').touched
+              }"
+              class="form-control"
+              formControlName="valor"
+              placeholder="Valor"
+            />
+            <div
+              *ngIf="
+                form.get('valor').hasError('required') &&
+                form.get('valor').touched
+              "
+              class="invalid-feedback"
+            >
+              Campo Obrigatório
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Tipo Renda</label>
+            <select
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('tipo').errors && form.get('tipo').touched
+              }"
+              formControlName="tipo"
+            >
+              <option value="1">Diaria</option>
+              <option value="0">Mensal</option>
+            </select>
+            <div
+              *ngIf="
+                form.get('tipo').hasError('required') &&
+                form.get('tipo').touched
+              "
+              class="invalid-feedback"
+            >
+              Campo Obrigatório
+            </div>
+            <div
+              *ngIf="
+                form.get('tipo').hasError('max') &&
+                form.get('tipo').touched
+              "
+              class="invalid-feedback"
+            >
+              Valor Maximo e 1.
+            </div>
+            <div
+              *ngIf="
+                form.get('tipo').hasError('min') &&
+                form.get('tipo').touched
+              "
+              class="invalid-feedback"
+            >
+              Valor Minimo e 0.
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Descrição</label>
+            <textarea [ngClass]="{'is-invalid': form.get('descricao').errors && form.get('descricao').touched}"
+              class="form-control" formControlName="descricao" placeholder="Descrição"></textarea>
+            <div *ngIf="form.get('descricao').hasError('required') && form.get('descricao').touched"
+              class="invalid-feedback">
+              Campo Obrigatório
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer d-flex">
+      <button class="btn btn-secondary" (click)="insertAndUpdate.hide()">
+        Fechar
+      </button>
+      <button
+        class="btn btn-primary ml-auto"
+        [disabled]="!form.valid"
+        (click)="salvarAlteracao(insertAndUpdate)"
+      >
+        Salvar Alterações
+      </button>
+    </div>
+  </div>
+</div>
+</div>
 
 
