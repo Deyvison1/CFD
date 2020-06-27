@@ -23,6 +23,7 @@ export class UserComponent implements OnInit {
   user: User = new User();
   form: FormGroup;
   postOrPot = '';
+  tituloModal = '';
   _filtroLista = '';
   // --> Pages
   pageAtual = 1;
@@ -89,14 +90,41 @@ export class UserComponent implements OnInit {
       rendas: this.fb.array([])
     });
   }
-  // POST AND PUT
+  // DELETE
+  deletar(dados: any) {
+    this.loading = true;
+    if (this.user.id !== null) {
+      this.userService.delete(this.user.id).subscribe(
+        (data) => {
+          dados.hide();
+          this.toastr.success('Sucesso no Excluir');
+          this.getAllUser();
+          this.getUltimosUsers();
+          this.loading = false;
+        }, error => {
+          console.log(`Erro ao deletar. CODE: ${error}`);
+          this.loading = false;
+        }
+      );
+    } else {
+      this.toastr.error('Id Null');
+    }
+  }
+  confirmeDelete(dados: any, _user: User) {
+    dados.show();
+    this.user = _user;
+  }
+  // POST
   inserir(inserir: any) {
     this.postOrPot = 'post';
+    this.tituloModal = 'Inserir';
     this.form.reset();
     inserir.show();
   }
+  // PUT
   editar(dados: any, _user: User) {
     this.postOrPot = 'put';
+    this.tituloModal = 'Editar';
     this.form.reset();
     dados.show();
     this.user = _user;
@@ -159,24 +187,6 @@ export class UserComponent implements OnInit {
       );
     } else {
       console.log('deu errado');
-    }
-  }
-  // DELETE
-  delete(userDelete: User) {
-    this.loading = true;
-    this.user = userDelete;
-    if (this.user.id !== null) {
-      this.userService.delete(this.user.id).subscribe(
-        (data) => {
-          console.log('Deletado');
-          this.getAllUser();
-          this.getUltimosUsers();
-          this.loading = false;
-        }, error => {
-          console.log(`Erro ao deletar. CODE: ${error}`);
-          this.loading = false;
-        }
-      );
     }
   }
   // GET

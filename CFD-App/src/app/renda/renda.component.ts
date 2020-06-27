@@ -18,6 +18,10 @@ export class RendaComponent implements OnInit {
   rendasFiltradas: Renda[] = [];
   id = 2;
   form: FormGroup;
+
+
+  // Variaveis Aux
+  tituloModal = '';
   metodoSalvar = '';
 
   // Pages
@@ -68,21 +72,53 @@ export class RendaComponent implements OnInit {
       tipo: ['', [Validators.required, Validators.min(0), Validators.max(1)]],
       dataRenda: ['', [Validators.required]],
       valor: ['', Validators.required],
-      descricao: ['']
+      descricao: [''],
+      userId: ['']
     });
   }
   abrirModal(dados: any) {
     this.form.reset();
     dados.show();
   }
+  // DELETAR
+  confirmeDelete(dados: any, _renda: Renda) {
+    dados.show();
+    this.renda = _renda;
+  }
+  deletar(dados: any) {
+    this.loading = true;
+    if (this.renda.id !== null) {
+      this.rendaService.delete(this.renda.id).subscribe(
+        (data) => {
+          dados.hide();
+          this.toastr.success('Sucesso no Excluir');
+          this.getAll();
+          this.getUltimasRendasAdd();
+          this.loading = false;
+        }, error => {
+          this.toastr.error(`Erro no Excluir. CODE: ${error}`);
+        }
+      );
+    } else {
+      this.toastr.error('Id Null');
+    }
+  }
+  // DETALHES
+  detalhes(dados: any, _renda: Renda) {
+    this.abrirModal(dados);
+    this.renda = _renda;
+    this.form.patchValue(this.renda);
+  }
   // POST
   inserir(dados: any) {
     this.metodoSalvar = 'post';
+    this.tituloModal = 'Inserir';
     this.abrirModal(dados);
   }
   // PUT
   editar(dados: any, _renda: Renda) {
     this.metodoSalvar = 'put';
+    this.tituloModal = 'Editar';
     this.abrirModal(dados);
     this.renda = _renda;
     this.form.patchValue(this.renda);
@@ -93,7 +129,7 @@ export class RendaComponent implements OnInit {
       if (this.metodoSalvar === 'post') {
         this.renda = Object.assign({ }, this.form.value);
 
-        this.renda.userId = 2;
+        this.renda.userId = 4;
         this.rendaService.post(this.renda).subscribe(
           (data: Renda) => {
             dados.hide();
@@ -107,7 +143,7 @@ export class RendaComponent implements OnInit {
         );
       } else if (this.metodoSalvar === 'put') {
         this.renda = Object.assign({ id: this.renda.id }, this.form.value);
-        this.renda.userId = 2;
+        // this.renda.userId = 2;
         this.rendaService.put(this.renda).subscribe(
           (data: Renda) => {
             dados.hide();

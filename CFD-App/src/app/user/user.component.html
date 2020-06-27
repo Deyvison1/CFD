@@ -194,18 +194,18 @@
               <div class="btn-group">
                 <button
                   class="btn btn-secondary btn-sm"
-                  (click)="editar(insertAndUpdate, user)"
+                  (click)="editar(insertAndUpdate, user)" tooltip="Editar"
                 >
                   <i class="fa fa-edit" aria-hidden="true"></i>&nbsp; Editar
                 </button>
                 <button
                   class="btn btn-info btn-sm"
-                  (click)="detalhes(details, user)"
+                  (click)="detalhes(details, user)" tooltip="Detalhes"
                 >
                   <i class="fas fa-info"></i>&nbsp; Detalhes
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="delete(user)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Deletar
+                <button class="btn btn-danger btn-sm" tooltip="Excluir" (click)="confirmeDelete(modalDelete, user)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Excluir
                 </button>
               </div>
             </td>
@@ -215,7 +215,7 @@
     </div>
     <div
       style="width: 370px; height: 30px; margin-top: 10px;"
-      class="text-center"
+      class=""
     >
       <pagination-controls
         (pageChange)="pageAtual = $event"
@@ -254,7 +254,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 id="dialog-sizes-name1" class="modal-title pull-left">
-              Editar
+              {{tituloModal}}
             </h4>
             <button
               type="button"
@@ -557,5 +557,33 @@
       </div>
     </div>
     
+  </div>
+</div>
+
+
+<div class="modal fade" bsModal #modalDelete="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name" class="modal-title pull-left">Deletar Usuario</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalDelete.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir esse Usuario?
+        <p><strong>ID: &nbsp;</strong><br>{{user.id}}</p><br>
+        <p><strong>NOME COMPLETO: &nbsp;</strong><br>{{user.nome}}</p><br>
+        <p><strong>E-MAIL: &nbsp;</strong><br>{{user.email}}</p><br>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="modalDelete.hide()">
+          Não
+        </button>
+        <button class="btn btn-success ml-auto" (click)="deletar(modalDelete)">
+          Sim
+        </button>
+      </div>
   </div>
 </div>

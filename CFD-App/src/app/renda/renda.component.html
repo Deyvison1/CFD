@@ -101,10 +101,10 @@
                 <button class="btn btn-secondary btn-sm" (click)="editar(insertAndUpdate , renda)">
                   <i class="fa fa-edit" aria-hidden="true"></i>&nbsp; Editar
                 </button>
-                <button class="btn btn-info btn-sm">
+                <button class="btn btn-info btn-sm" (click)="detalhes(details, renda)">
                   <i class="fas fa-info"></i>&nbsp; Detalhes
                 </button>
-                <button class="btn btn-danger btn-sm">
+                <button class="btn btn-danger btn-sm" (click)="confirmeDelete(modalDelete, renda)">
                   <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Deletar
                 </button>
               </div>
@@ -132,7 +132,7 @@
     <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
 </div>
 
-
+<!-- Insert And Update -->
 <div
 bsModal
 #insertAndUpdate="bs-modal"
@@ -145,7 +145,7 @@ aria-labelledby="dialog-sizes-name1"
   <div class="modal-content">
     <div class="modal-header">
       <h4 id="dialog-sizes-name1" class="modal-title pull-left">
-        Editar
+        {{tituloModal}}
       </h4>
       <button
         type="button"
@@ -299,6 +299,11 @@ aria-labelledby="dialog-sizes-name1"
             </div>
           </div>
         </div>
+        <div style="display: none;" class="form-row">
+          <div class="form-group col-md-12">
+            <input type="hidden" formControlName="userId">
+          </div>
+        </div>
       </form>
     </div>
     <div class="modal-footer d-flex">
@@ -317,4 +322,131 @@ aria-labelledby="dialog-sizes-name1"
 </div>
 </div>
 
+<!-- Detalhes -->
+<div
+bsModal
+#details="bs-modal"
+class="modal fade"
+tabindex="-1"
+role="dialog"
+aria-labelledby="dialog-sizes-name1"
+>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+        Detalhes
+      </h4>
+      <button
+        type="button"
+        class="close pull-right"
+        (click)="details.hide()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Titulo</label>
+            <input
+              autofocus
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('titulo').errors && form.get('titulo').touched
+              }"
+              class="form-control"
+              formControlName="titulo"
+              placeholder="Titulo"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label>Data Renda</label>
+            <input
+              type="datetime-local"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('dataRenda').errors && form.get('dataRenda').touched
+              }"
+              class="form-control"
+              formControlName="dataRenda"
+              placeholder="Data da Renda"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Valor</label>
+            <input
+              type="number"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('valor').errors && form.get('valor').touched
+              }"
+              class="form-control"
+              formControlName="valor"
+              placeholder="Valor"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label>Tipo Renda</label>
+            <select
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  form.get('tipo').errors && form.get('tipo').touched
+              }"
+              formControlName="tipo"
+            >
+              <option value="1">Diaria</option>
+              <option value="0">Mensal</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Descrição</label>
+            <textarea [ngClass]="{'is-invalid': form.get('descricao').errors && form.get('descricao').touched}"
+              class="form-control" formControlName="descricao" placeholder="Descrição"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer d-flex">
+      <button class="btn btn-secondary" (click)="details.hide()">
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>
+</div>
 
+<div class="modal fade" bsModal #modalDelete="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name" class="modal-title pull-left">Deletar Usuario</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalDelete.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir essa Renda?
+        <p><strong>ID: &nbsp;</strong><br>{{renda.id}}</p><br>
+        <p><strong>TITULO: &nbsp;</strong><br>{{renda.titulo | titlecase}}</p><br>
+        <p><strong>VALOR: &nbsp;</strong><br>{{renda.valor | currency: 'R$ '}}</p><br>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="modalDelete.hide()">
+          Não
+        </button>
+        <button class="btn btn-success ml-auto" (click)="deletar(modalDelete)">
+          Sim
+        </button>
+      </div>
+  </div>
+</div>
