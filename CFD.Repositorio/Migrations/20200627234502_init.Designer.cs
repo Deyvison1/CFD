@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CFD.Repositorio.Migrations
 {
     [DbContext(typeof(CFDContext))]
-    [Migration("20200625003729_inti")]
-    partial class inti
+    [Migration("20200627234502_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<DateTime?>("DataModificacao");
 
-                    b.Property<DateTime>("DataRegistro");
+                    b.Property<DateTime?>("DataRegistro");
 
                     b.Property<DateTime?>("DataVencimento");
 
@@ -40,13 +40,13 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("Situacao");
 
-                    b.Property<int>("TipoDivida");
-
                     b.Property<string>("Titulo");
 
                     b.Property<int>("UserId");
 
                     b.Property<decimal>("Valor");
+
+                    b.Property<decimal>("ValorTotal");
 
                     b.HasKey("Id");
 

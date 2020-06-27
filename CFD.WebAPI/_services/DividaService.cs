@@ -106,7 +106,11 @@ namespace CFD.WebAPI._services
         public async Task<DividaDto> Add(DividaDto dividaDto) {
             try {
                 var entidade = _map.Map<Divida>(dividaDto);
+                
+                // Data De Registro da Divida
+                entidade.DataRegistro = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
+                entidade.ValorTotal = entidade.Valor * (Convert.ToDecimal(entidade.Parcela));
                 _repo.Add(entidade);
 
                 if(await _repo.SaveChanges()) {
@@ -124,6 +128,8 @@ namespace CFD.WebAPI._services
                 var divida = await _repo.GetDividaById(dividaDto.Id);
                 if(divida == null) throw new ArgumentException("DIVIDA: Nenhum registro encontrado com esse id");
 
+                dividaDto.DataModificacao = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+                
                 _map.Map(dividaDto, divida);
                 _repo.Update(divida);
 

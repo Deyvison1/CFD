@@ -66,12 +66,17 @@
           </div>
         </div>
         <form>
-          <div style="width: 260px; position: absolute; bottom: 5px; left: 5px;" class="buscar">
+          <div style="width: 260px; position: absolute; bottom: 5px; left: 5px;"
+          class="buscar">
             <input [(ngModel)]="filtroLista" type="search" name="busca" class="form-control text-center" placeholder="Pesquisar">
           </div>
         </form>
-        <div style="width: 135px; position: absolute; bottom: 5px; right: 6px;" class="newItens">
-          <button class="btn btn-success text-center" (click)="inserir(insertAndUpdate)">Novo Usuario</button>
+        <div
+        style="width: 167 px; position: absolute; bottom: 6px; right: 3px;"
+        class="newItens">
+          <button class="btn btn-success text-center" (click)="inserir(insertAndUpdate)">
+            <i class="fa fa-plus-circle"></i>&nbsp; Nova Renda
+          </button>
         </div>
       </div>
     </div>
@@ -98,14 +103,14 @@
             <td>{{renda.descricao}}</td>
             <td class="text-center">
               <div class="btn-group">
-                <button class="btn btn-secondary btn-sm" (click)="editar(insertAndUpdate , renda)">
+                <button class="btn btn-secondary btn-sm" tooltip="Editar" (click)="editar(insertAndUpdate , renda)">
                   <i class="fa fa-edit" aria-hidden="true"></i>&nbsp; Editar
                 </button>
-                <button class="btn btn-info btn-sm" (click)="detalhes(details, renda)">
+                <button class="btn btn-info btn-sm" tooltip="Detalhes" (click)="detalhes(details, renda)">
                   <i class="fas fa-info"></i>&nbsp; Detalhes
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="confirmeDelete(modalDelete, renda)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Deletar
+                <button class="btn btn-danger btn-sm" tooltip="Excluir" (click)="confirmeDelete(modalDelete, renda)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Excluir
                 </button>
               </div>
             </td>

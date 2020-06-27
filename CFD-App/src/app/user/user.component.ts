@@ -36,7 +36,7 @@ export class UserComponent implements OnInit {
   rendasUser: Renda[] = [];
   rendaUser: Renda = new Renda();
   // --> Painel
-  id = 2;
+  id = 1;
   valorePainel: ValoresDividaAndRenda = new ValoresDividaAndRenda();
   // Loading
   public loading = false;
@@ -63,7 +63,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.validacao();
     this.getAllUser();
-    this.getValoresPainel(this.id);
+    this.getValoresPainel();
     this.getUltimosUsers();
   }
 
@@ -100,6 +100,7 @@ export class UserComponent implements OnInit {
           this.toastr.success('Sucesso no Excluir');
           this.getAllUser();
           this.getUltimosUsers();
+          this.getValoresPainel();
           this.loading = false;
         }, error => {
           console.log(`Erro ao deletar. CODE: ${error}`);
@@ -141,6 +142,7 @@ export class UserComponent implements OnInit {
             this.toastr.success('Sucesso no Cadastro');
             this.getAllUser();
             this.getUltimosUsers();
+            this.getValoresPainel();
             this.loading = false;
           }, error => {
             this.toastr.error(`Erro no Cadastro: ${error}`);
@@ -154,6 +156,7 @@ export class UserComponent implements OnInit {
             this.toastr.success('Sucesso no Atualizar');
             this.getAllUser();
             this.getUltimosUsers();
+            this.getValoresPainel();
             this.loading = false;
           }, error => {
             this.toastr.success(`Erro no Atualizar. CODE: ${error}`);
@@ -199,8 +202,8 @@ export class UserComponent implements OnInit {
       }
     );
   }
-  getValoresPainel(id: number) {
-    this.userService.getValoresPainel(id).subscribe(
+  getValoresPainel() {
+    this.userService.getValoresPainel(this.id).subscribe(
       (data: ValoresDividaAndRenda) => {
         this.valorePainel = data;
       }, error => {

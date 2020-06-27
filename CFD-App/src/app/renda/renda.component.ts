@@ -16,7 +16,7 @@ export class RendaComponent implements OnInit {
   rendas: Renda[] = [];
   rendasLast: Renda[] = [];
   rendasFiltradas: Renda[] = [];
-  id = 2;
+  id = 1;
   form: FormGroup;
 
 
@@ -94,6 +94,7 @@ export class RendaComponent implements OnInit {
           this.toastr.success('Sucesso no Excluir');
           this.getAll();
           this.getUltimasRendasAdd();
+          this.getValoresPainel();
           this.loading = false;
         }, error => {
           this.toastr.error(`Erro no Excluir. CODE: ${error}`);
@@ -112,7 +113,7 @@ export class RendaComponent implements OnInit {
   // POST
   inserir(dados: any) {
     this.metodoSalvar = 'post';
-    this.tituloModal = 'Inserir';
+    this.tituloModal = 'Adicionar';
     this.abrirModal(dados);
   }
   // PUT
@@ -129,12 +130,13 @@ export class RendaComponent implements OnInit {
       if (this.metodoSalvar === 'post') {
         this.renda = Object.assign({ }, this.form.value);
 
-        this.renda.userId = 4;
+        this.renda.userId = 1;
         this.rendaService.post(this.renda).subscribe(
           (data: Renda) => {
             dados.hide();
             this.toastr.success('Sucesso no Cadastro');
             this.getAll();
+            this.getValoresPainel();
             this.getUltimasRendasAdd();
             this.loading = false;
           }, error => {
@@ -150,6 +152,7 @@ export class RendaComponent implements OnInit {
             this.toastr.success('Sucesso na Atualizacao');
             this.getAll();
             this.getUltimasRendasAdd();
+            this.getValoresPainel();
             this.loading = false;
           }, error => {
             this.toastr.error(`Erro no Atualizar. CODE: ${error}`);

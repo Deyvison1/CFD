@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DividaService } from '../_services/divida.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Divida } from '../_models/Divida';
 import { ValoresDividaAndRenda } from '../_models/ValoresDividaAndRenda';
+import { escapeHtml } from '@angular/platform-browser/src/browser/transfer_state';
+import { ToastrService } from 'ngx-toastr';
+import { getLocaleDayPeriods } from '@angular/common';
 
 @Component({
   selector: 'app-divida',
@@ -26,6 +29,10 @@ export class DividaComponent implements OnInit {
   public loading = false;
 
 
+  // VARIAVEIS AUX
+  metodoSalvar = '';
+  tituloModal = '';
+
   _filtroLista = '';
 
   get filtroLista(): string {
@@ -39,10 +46,12 @@ export class DividaComponent implements OnInit {
 
   constructor(
     private dividaService: DividaService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
+    this.validacao();
     this.getAll();
     this.getUltimasDividas();
     this.getValoresPainel();
@@ -63,12 +72,128 @@ export class DividaComponent implements OnInit {
 
   validacao() {
     this.form = this.fb.group({
-      titulo: [''],
-      valor: [''],
-      descricao: ['']
+      titulo: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(80)]],
+      dataCompra: ['', Validators.required],
+      parcela: ['', Validators.required],
+      formaCompra: ['', [Validators.required, Validators.max(1), Validators.min(0)]],
+      dataVencimento: ['', Validators.required],
+      valor: ['', Validators.required ],
+      descricaoProduto: ['', Validators.required],
+      userId: [''],
+      dataRegistro: [''],
+      dataModificacao: [''],
+      situacao: ['']
     });
   }
 
+  // MODAL
+  abrirModal(dados: any) {
+    this.form.reset();
+    dados.show();
+  }
+  // DETALHES
+  detalhes(dados: any, _divida: Divida) {
+    this.tituloModal = 'Detalhes';
+    this.abrirModal(dados);
+    this.divida = _divida;
+    this.form.patchValue(this.divida);
+  }
+  // POST
+  inserir(dados: any, _divida: Divida) {
+    this.tituloModal = 'Adicionar';
+    this.metodoSalvar = 'post';
+    this.abrirModal(dados);
+  }
+  // PUT
+  editar(dados: any, _divida: Divida) {
+    this.tituloModal = 'Editar';
+    this.metodoSalvar = 'put';
+    this.abrirModal(dados);
+    this.divida = _divida;
+    this.form.patchValue(this.divida);
+  }
+  // DELETE
+  deletar(dados: any, _divida: Divida) {
+    this.abrirModal(dados);
+    this.divida = _divida;
+  }
+  confirmeDelete(dados: any) {
+    this.loading = true;
+    this.dividaService.delete(this.divida.id).subscribe(
+      (data: Divida) => {
+        dados.hide();
+        this.toastr.success('Sucesso no Excluir');
+        this.getAll();
+        this.getUltimasDividas();
+        this.getValoresPainel();
+        this.loading = false;
+      }, error => {
+        this.toastr.error(`Erro ao Deletar. CODE: ${error}`);
+      }
+    );
+  }
+  // PAGAR
+  confirmaPagamento(_divida: Divida) {
+    this.loading = true;
+
+    this.divida = _divida;
+    this.divida = Object.assign({ id: this.divida.id }, this.divida);
+    this.divida.situacao = 1;
+    this.dividaService.put(this.divida).subscribe(
+      (data: Divida) => {
+        this.toastr.success('Sucesso no Pagamento');
+        this.getAll();
+        this.getUltimasDividas();
+        this.getValoresPainel();
+        this.loading = false;
+      }, error => {
+        this.toastr.error(`Erro no Pagamento. CODE: ${error}`);
+      }
+    );
+  }
+  // SALVAR ALTERACOES
+  salvarAlteracao(dados: any) {
+    this.loading = true;
+    if (this.form.valid) {
+      if (this.metodoSalvar === 'post') {
+        this.divida = Object.assign({  }, this.form.value);
+
+        this.divida.userId = 1;
+        this.divida.situacao = 0;
+        this.dividaService.post(this.divida).subscribe(
+          (data: Divida) => {
+            dados.hide();
+            this.divida = data;
+            this.toastr.success('Sucesso no Cadastro.');
+            this.getAll();
+            this.getUltimasDividas();
+            this.getValoresPainel();
+            this.loading = false;
+          }, error => {
+            this.toastr.error(`Erro no Cadastro. CODE: ${error}`);
+          }
+        );
+      } else if (this.metodoSalvar === 'put') {
+        this.divida = Object.assign({ id: this.divida.id }, this.form.value);
+
+        this.dividaService.put(this.divida).subscribe(
+          (data: Divida) => {
+            dados.hide();
+            this.divida = data;
+            this.toastr.success('Sucesso no Atualizar.');
+            this.getAll();
+            this.getUltimasDividas();
+            this.getValoresPainel();
+            this.loading = false;
+          }, error => {
+            this.toastr.error(`Erro no Atualizar. CODE: ${error}`);
+          }
+        );
+      } else {
+        this.toastr.error('Erro, não e post nem put.');
+      }
+    }
+  }
   getValoresPainel() {
     return this.dividaService.getValoresPainel(this.id).subscribe(
       (data: ValoresDividaAndRenda) => {

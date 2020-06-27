@@ -26,7 +26,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<DateTime?>("DataModificacao");
 
-                    b.Property<DateTime>("DataRegistro");
+                    b.Property<DateTime?>("DataRegistro");
 
                     b.Property<DateTime?>("DataVencimento");
 
@@ -38,13 +38,13 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("Situacao");
 
-                    b.Property<int>("TipoDivida");
-
                     b.Property<string>("Titulo");
 
                     b.Property<int>("UserId");
 
                     b.Property<decimal>("Valor");
+
+                    b.Property<decimal>("ValorTotal");
 
                     b.HasKey("Id");
 

@@ -8,20 +8,15 @@ namespace CFD.WebAPI.Dtos
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "{0} é obrigatorio!")]
-        [StringLength(170, MinimumLength = 8, ErrorMessage = "{0} deve ter entre 8 a 170 caracteres!")]
+        [StringLength(80, MinimumLength = 8, ErrorMessage = "{0} deve ter entre 8 a 80 caracteres!")]
         public string Titulo { get; set; }
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime DataCompra { get; set; }
-        [DataType(DataType.Date)]
-        [Required(ErrorMessage = "{0} é obrigatorio!")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime DataRegistro { get; set; }
+        public DateTime? DataCompra { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
+        public DateTime? DataRegistro { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DataModificacao { get; set; }
-        [Required(ErrorMessage = "{0} é obrigatorio!")]
-        [Range(0, 1, ErrorMessage = "{0} deve ser 0 ou 1")]
-        public int TipoDivida { get; set; }
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         public int Parcela { get; set; }
         [Required(ErrorMessage = "{0} é obrigatorio!")]
@@ -34,6 +29,9 @@ namespace CFD.WebAPI.Dtos
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal Valor { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:c}")]
+        public decimal ValorTotal { get; set; }
         public string DescricaoProduto { get; set; }
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         [Range(0,1, ErrorMessage = "{0} deve ser 0 ou 1.")]
