@@ -77,12 +77,13 @@ export class DividaComponent implements OnInit {
       parcela: ['', Validators.required],
       formaCompra: ['', [Validators.required, Validators.max(1), Validators.min(0)]],
       dataVencimento: ['', Validators.required],
-      valor: ['', Validators.required ],
+      valorParcela: [''],
       descricaoProduto: ['', Validators.required],
       userId: [''],
       dataRegistro: [''],
       dataModificacao: [''],
-      situacao: ['']
+      situacao: [''],
+      valorTotal: ['', Validators.required]
     });
   }
 
@@ -160,6 +161,8 @@ export class DividaComponent implements OnInit {
 
         this.divida.userId = 1;
         this.divida.situacao = 0;
+        this.divida.valorParcela = this.divida.valorTotal / this.divida.parcela;
+
         this.dividaService.post(this.divida).subscribe(
           (data: Divida) => {
             dados.hide();
@@ -175,6 +178,8 @@ export class DividaComponent implements OnInit {
         );
       } else if (this.metodoSalvar === 'put') {
         this.divida = Object.assign({ id: this.divida.id }, this.form.value);
+
+        this.divida.valorParcela = this.divida.valorTotal / this.divida.parcela;
 
         this.dividaService.put(this.divida).subscribe(
           (data: Divida) => {

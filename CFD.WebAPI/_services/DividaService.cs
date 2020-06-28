@@ -110,7 +110,6 @@ namespace CFD.WebAPI._services
                 // Data De Registro da Divida
                 entidade.DataRegistro = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
-                entidade.ValorTotal = entidade.Valor * (Convert.ToDecimal(entidade.Parcela));
                 _repo.Add(entidade);
 
                 if(await _repo.SaveChanges()) {
@@ -175,16 +174,16 @@ namespace CFD.WebAPI._services
                 decimal dividasPagas = todasDividas.Where(
                     x => x.UserId == idUser && x.Situacao == 1
                 ).Sum(
-                    x => x.Valor
+                    x => x.ValorTotal
                 );
                 decimal todasDividasPendentes = todasDividas.Where(
                     x => x.UserId == idUser && x.Situacao == 0
                 ).Sum(
-                    x => x.Valor
+                    x => x.ValorTotal
                 );
                 decimal todasDividasPorIdUser = todasDividas.Where(
                     x => x.UserId == idUser
-                ).Sum(x => x.Valor);
+                ).Sum(x => x.ValorParcela);
                 DividaValoresDto dividaValoresDto = new DividaValoresDto();
 
                 dividaValoresDto.ValorTotalDividasPorId = todasDividasPorIdUser;

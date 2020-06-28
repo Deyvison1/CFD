@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 namespace CFD.Dominio
 {
     public class Divida
@@ -11,11 +14,12 @@ namespace CFD.Dominio
         public int Parcela               { get; set; }
         public int FormaCompra           { get; set; }
         public DateTime? DataVencimento  { get; set; }
-        public decimal Valor             { get; set; }
+        public decimal ValorParcela      { get; set; }
         public decimal ValorTotal        { get; set; }
         public string DescricaoProduto   { get; set; }
         public int Situacao              { get; set; }
         public int UserId                { get; set; }
         public User Usuario              { get; set; }
+
     }
 }

@@ -42,7 +42,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.Property<decimal>("Valor");
+                    b.Property<decimal>("ValorParcela");
 
                     b.Property<decimal>("ValorTotal");
 

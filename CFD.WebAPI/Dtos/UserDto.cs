@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CFD.Dominio;
+using System.Linq;
 
 namespace CFD.WebAPI.Dtos
 {

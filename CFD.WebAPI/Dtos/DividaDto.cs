@@ -28,7 +28,7 @@ namespace CFD.WebAPI.Dtos
         [Required(ErrorMessage = "{0} é obrigatorio!")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:c}")]
-        public decimal Valor { get; set; }
+        public decimal ValorParcela { get; set; }
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal ValorTotal { get; set; }

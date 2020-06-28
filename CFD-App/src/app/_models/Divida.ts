@@ -8,7 +8,8 @@ export class Divida {
   parcela: number;
   formaCompra: number;
   dataVencimento: Date;
-  valor: number;
+  valorParcela: number;
+  valorTotal: number;
   descricaoProduto: string;
   situacao: number;
   userId: number;

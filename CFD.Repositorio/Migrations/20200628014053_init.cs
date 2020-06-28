@@ -37,7 +37,7 @@ namespace CFD.Repositorio.Migrations
                     Parcela = table.Column<int>(nullable: false),
                     FormaCompra = table.Column<int>(nullable: false),
                     DataVencimento = table.Column<DateTime>(nullable: true),
-                    Valor = table.Column<decimal>(nullable: false),
+                    ValorParcela = table.Column<decimal>(nullable: false),
                     ValorTotal = table.Column<decimal>(nullable: false),
                     DescricaoProduto = table.Column<string>(nullable: true),
                     Situacao = table.Column<int>(nullable: false),

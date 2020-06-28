@@ -51,7 +51,11 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
         tertiaryColour: '#ffffff'
     }),
     TabsModule.forRoot(),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({
+         timeOut: 10000,
+         progressBar: true,
+         preventDuplicates: true
+    })
   ],
   providers: [
     UserService

@@ -104,7 +104,7 @@ namespace CFD.Repositorio
             var result = _context.Dividas.Where(
                 x => x.Titulo.ToLower().Contains(buscar.ToLower()) ||
                 x.DescricaoProduto.ToLower().Contains(buscar.ToLower()) ||
-                x.Valor.ToString().Contains(buscar)
+                x.ValorParcela.ToString().Contains(buscar)
             );
 
             return await result.ToArrayAsync();

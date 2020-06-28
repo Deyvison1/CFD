@@ -14,7 +14,7 @@
         <tbody>
           <tr class="text-center" *ngFor="let divida of dividaLast">
             <td>{{divida.titulo}}</td>
-            <td>{{divida.valor | currency: 'R$ '}}</td>
+            <td>{{divida.valorTotal | currency: 'R$ '}}</td>
             <td>
               {{divida.dataCompra | date: 'dd/mm/yyyy'}}
             </td>
@@ -90,7 +90,7 @@
         <thead>
           <tr>
             <th>Titulo</th>
-            <th>Valor</th>
+            <th>Valor Total</th>
             <th>Data Compra</th>
             <th class="text-center">Ações</th>
           </tr>
@@ -98,7 +98,7 @@
         <tbody>
           <tr *ngFor="let divida of dividasFiltradas | paginate: { itemsPerPage: itensPorPage, currentPage: pageAtual }">
             <td>{{divida.titulo}}</td>
-            <td>{{divida.valor | currency: 'R$ '}}</td>
+            <td>{{divida.valorTotal | currency: 'R$ '}}</td>
             <td>{{divida.dataCompra | date: 'dd/MM/yyyy'}}</td>
             <td class="text-center">
               <div class="btn-group">
@@ -327,16 +327,16 @@ aria-labelledby="dialog-sizes-name1"
               type="number"
               [ngClass]="{
                 'is-invalid':
-                  form.get('valor').errors && form.get('valor').touched
+                  form.get('valorTotal').errors && form.get('valorTotal').touched
               }"
               class="form-control"
-              formControlName="valor"
-              placeholder="Valor"
+              formControlName="valorTotal"
+              placeholder="ValorTotal"
             />
             <div
               *ngIf="
-                form.get('valor').hasError('required') &&
-                form.get('valor').touched
+                form.get('valorTotal').hasError('required') &&
+                form.get('valorTotal').touched
               "
               class="invalid-feedback"
             >
@@ -466,7 +466,7 @@ aria-labelledby="dialog-sizes-name1"
         </div>
         <div class="form-row">
           
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
           <label>Situação</label>
           <select
             class="form-control"
@@ -477,7 +477,7 @@ aria-labelledby="dialog-sizes-name1"
             <option value="0">Pendente</option>
           </select>
         </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-3">
             <label>Parcelas</label>
             <input
               type="number"
@@ -485,12 +485,20 @@ aria-labelledby="dialog-sizes-name1"
               formControlName="parcela"
             />
           </div>
-          <div class="form-group col-md-4">
-            <label>Valor</label>
+          <div class="form-group col-md-3">
+            <label>Valor Total</label>
             <input
               type="number"
               class="form-control"
-              formControlName="valor"
+              formControlName="valorTotal"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valor Parcelas</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="valorParcela"
             />
           </div>
         </div>
@@ -531,7 +539,7 @@ aria-labelledby="dialog-sizes-name1"
         Tem certeza que deseja excluir essa Divida?
         <p><strong>ID: &nbsp;</strong><br>{{divida.id}}</p><br>
         <p><strong>TITULO: &nbsp;</strong><br>{{divida.titulo | titlecase}}</p><br>
-        <p><strong>VALOR: &nbsp;</strong><br>{{divida.valor | currency: 'R$ '}}</p><br>
+        <p><strong>VALOR: &nbsp;</strong><br>{{divida.valorTotal | currency: 'R$ '}}</p><br>
       </div>
       <div class="modal-footer">
         <button class="btn btn-danger" (click)="modalDelete.hide()">

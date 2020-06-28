@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CFD.Repositorio.Migrations
 {
     [DbContext(typeof(CFDContext))]
-    [Migration("20200627234502_init")]
+    [Migration("20200628014053_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace CFD.Repositorio.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.Property<decimal>("Valor");
+                    b.Property<decimal>("ValorParcela");
 
                     b.Property<decimal>("ValorTotal");
 
