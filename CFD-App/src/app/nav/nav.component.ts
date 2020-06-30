@@ -25,7 +25,6 @@ export class NavComponent implements OnInit {
 
   sair() {
     localStorage.removeItem('token');
-    this.toastr.show('Deslogado');
     this.router.navigate(['/login']);
   }
   abrirMenu() {

@@ -223,7 +223,24 @@ namespace CFD.WebAPI._services
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+        // LOGIN
+        public async Task<User> Login(UserLoginDto userLoginDto)
+        {
+            try
+            {
+                var check = await _repo.CheckLogin(userLoginDto.Email, userLoginDto.Senha);
 
+                if (check == null) throw new ArgumentException("Não Autorizado");
+
+                var useToReturn = _map.Map<UserLoginDto>(check);
+                return check;
+                
+            }
+            catch (System.Exception e)
+            {
+                throw new ArgumentException($"USER: Erro ao logar. CODE: {e.Message}");
+            }
         }
     }
 }

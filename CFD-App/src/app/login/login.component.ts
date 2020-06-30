@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/divida']);
         this.toastr.success('Sucesso no Login');
       }, error => {
-        this.toastr.error(`Erro ao Logar.`);
+        this.toastr.error(`Usuario ou Senha Invalidos!`);
       }
     );
   }

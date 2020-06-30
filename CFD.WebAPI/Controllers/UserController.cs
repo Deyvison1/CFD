@@ -130,6 +130,27 @@ namespace CFD.WebAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Listar por Nome ou Email. CODE: {e.Message}");
             }
         }
+        // LOGIN
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
+        {
+            try
+            {
+                var check = await _userService.Login(userLoginDto);
+
+                return Ok(
+                    new
+                    {
+                        token = _userService.GeradorDeToken(check).Result
+                    }
+                );
+            }
+            catch (System.Exception e)
+            {
+                throw new ArgumentException($"USER: Erro ao logar. CODE: {e.Message}");
+            }
+        }
         // Adicionar
         [HttpPost]
         public async Task<IActionResult> Add(UserDto userDto)
@@ -179,32 +200,6 @@ namespace CFD.WebAPI.Controllers
             catch (System.Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Deletar. CODE: {e.Message}");
-            }
-        }
-        // LOGIN
-        [HttpPost("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
-        {
-            try
-            {
-                var check = await _repo.CheckLogin(userLoginDto.Email, userLoginDto.Senha);
-
-                if (check == null) {
-                    return Unauthorized("Usuario ou Senha Invalidos!");
-                } else {
-                    var useToReturn = _map.Map<UserLoginDto>(check);
-
-                    return Ok(
-                        new {
-                            token = _userService.GeradorDeToken(check).Result,
-                            user = useToReturn
-                        }
-                    );
-                }
-            }catch(System.Exception e)
-            {
-                throw new ArgumentException($"USER: Erro ao logar. CODE: {e.Message}");
             }
         }
     }
