@@ -1,0 +1,48 @@
+<br>
+<body data-gr-c-s-loaded="true">
+  <div style="margin-top: 50px;" class="text-center">
+  <form class="form-signin" #loginform="ngForm" (ngSubmit)="login()">
+    <p style="display: none;">
+      <img class="mb-4" src="" alt="" width="72" height="72" />
+    </p>
+    <h1 class="h3 mb-3 font-weight-normal">Por favor</h1>
+    <label for="email" class="sr-only">E-mail</label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      placeholder="E-mail"
+      name="email"
+      required=""
+      [(ngModel)]="model.email"
+    />
+    <label for="senha" class="sr-only">Senha</label>
+    <input
+      type="password"
+      id="senha"
+      class="form-control"
+      placeholder="Senha"
+      name="senha"
+      required=""
+      [(ngModel)]="model.senha"
+    />
+    <!--div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div-->
+
+    <button
+      [disabled]="!loginform.valid"
+      class="btn btn-lg btn-primary btn-block"
+      type="submit"
+    >
+      <i class="fas fa-sign-in-alt"></i>
+      Entrar
+    </button>
+  </form>
+  <!--  
+  <p class="mt-5 mb-3 text-muted">Não tem acesso? Solicite acesso abaixo</p>
+  <button class="btn btn-lg btn-link btn-block" >Quero ter acesso</button>
+  -->
+</div>

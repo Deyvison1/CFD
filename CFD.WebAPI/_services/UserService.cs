@@ -8,6 +8,12 @@ using CFD.WebAPI.Dtos;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Security.Claims;
+
+using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CFD.WebAPI._services
 {
@@ -15,9 +21,10 @@ namespace CFD.WebAPI._services
     {
         private readonly ICFDRepositorio _repo;
         private readonly IMapper _map;
+        private readonly IConfiguration _config;
 
-        public UserService(ICFDRepositorio repo, IMapper mapper, CFDContext context) { 
-            _repo = repo; _map = mapper;
+        public UserService(ICFDRepositorio repo, IMapper mapper, CFDContext context, IConfiguration config) { 
+            _repo = repo; _map = mapper; _config = config;
         }
         // Listar ultimos usuarios add
         public async Task<UserDto[]> GetUltimosUser() {
@@ -187,6 +194,36 @@ namespace CFD.WebAPI._services
             }catch(System.Exception e) {
                 throw new ArgumentException($"USER: Erro ao Deletar. CODE: {e.Message}");
             }
+        }
+        public async Task<string> GeradorDeToken(User user)
+        {
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Nome),
+                new Claim(ClaimTypes.Role, user.Papel.ToString())
+            };
+
+            var key = new SymmetricSecurityKey(
+                    Encoding.ASCII.GetBytes(_config
+                        .GetSection("AppSettings:Token").Value));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+
         }
     }
 }

@@ -511,7 +511,7 @@
               <tbody>
                 <tr *ngFor="let dividaUser of dividasUser">
                   <td>{{dividaUser.titulo | titlecase}}</td>
-                  <td>{{dividaUser.valor | currency: 'R$ '}}</td>
+                  <td>{{dividaUser.valorTotal | currency: 'R$ '}}</td>
                   <td>{{dividaUser.dataCompra | date: 'dd/MM/yyyy hh:mm'}}</td>
                   <td>
                     <button *ngIf="dividaUser.situacao == 1" class="btn btn-success">Paga</button>

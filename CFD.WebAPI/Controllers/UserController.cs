@@ -7,6 +7,7 @@ using CFD.Dominio;
 using CFD.Repositorio;
 using CFD.WebAPI._services;
 using CFD.WebAPI.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +22,12 @@ namespace CFD.WebAPI.Controllers
         //private readonly ICFDRepositorio _repo;
         //private readonly IMapper _map;
         private readonly UserService _userService;
-        public UserController(UserService userService)
+        private readonly ICFDRepositorio _repo;
+        private readonly IMapper _map;
+        public UserController(UserService userService, ICFDRepositorio repo, IMapper map)
         {
-            //_map = mapper;
+            _repo = repo;
+            _map = map;
             _userService = userService;
         }
         // Listar Ultimos Usuarios.
@@ -177,6 +181,31 @@ namespace CFD.WebAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"USER: Erro no Deletar. CODE: {e.Message}");
             }
         }
+        // LOGIN
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
+        {
+            try
+            {
+                var check = await _repo.CheckLogin(userLoginDto.Email, userLoginDto.Senha);
 
+                if (check == null) {
+                    return Unauthorized("Usuario ou Senha Invalidos!");
+                } else {
+                    var useToReturn = _map.Map<UserLoginDto>(check);
+
+                    return Ok(
+                        new {
+                            token = _userService.GeradorDeToken(check).Result,
+                            user = useToReturn
+                        }
+                    );
+                }
+            }catch(System.Exception e)
+            {
+                throw new ArgumentException($"USER: Erro ao logar. CODE: {e.Message}");
+            }
+        }
     }
 }

@@ -4,17 +4,17 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App"/>
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All"/>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CFD.Repositorio\CFD.Repositorio.csproj"/>
-    <ProjectReference Include="..\CFD.Dominio\CFD.Dominio.csproj"/>
+    <ProjectReference Include="..\CFD.Repositorio\CFD.Repositorio.csproj" />
+    <ProjectReference Include="..\CFD.Dominio\CFD.Dominio.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dtos\"/>
-    <Folder Include="Helpers\"/>
+    <Folder Include="Dtos\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 </Project>

@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CFD.Repositorio;
 using CFD.WebAPI._services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CFD.WebAPI
 {
@@ -35,7 +40,27 @@ namespace CFD.WebAPI
             services.AddScoped<DividaService>();
             services.AddScoped<RendaService>();
             services.AddAutoMapper();
-            services.AddMvc().AddJsonOptions(
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(
+                   options => {
+                       options.TokenValidationParameters = new TokenValidationParameters
+                       {
+                           ValidateIssuerSigningKey = true,
+                           IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                               .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                           ValidateIssuer = false,
+                           ValidateAudience = false
+                       };
+                   }
+               );
+
+            services.AddMvc(
+                opt =>
+                {
+                    var politica = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    opt.Filters.Add(new AuthorizeFilter(politica));
+                }
+            ).AddJsonOptions(   
                 opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -52,7 +77,7 @@ namespace CFD.WebAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             //app.UseHttpsRedirection();
             app.UseMvc();

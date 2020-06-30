@@ -21,6 +21,7 @@ import { NavComponent } from './nav/nav.component';
 import { UserService } from './_services/user.service';
 import { FooterComponent } from './footer/footer.component';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
     DividaComponent,
     RendaComponent,
     NavComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserAnimationsModule,

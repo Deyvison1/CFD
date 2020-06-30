@@ -153,5 +153,10 @@ namespace CFD.Repositorio
                 x => x.Id
             ).ToArrayAsync();
         }
+
+        public async Task<User> CheckLogin(string email, string senha)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email && x.Senha == senha);
+        }
     }
 }

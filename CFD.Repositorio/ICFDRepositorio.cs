@@ -16,6 +16,8 @@ namespace CFD.Repositorio
         void Delete<T>(T entidade) where T : class;
         Task<bool> SaveChanges();
         // ----> User
+        // USER LOGIN
+        Task<User> CheckLogin(string email, string senha);
         // Paginacao
         Task<User[]> GetAllUSerPaginacao(int page);
         // Listar Todos

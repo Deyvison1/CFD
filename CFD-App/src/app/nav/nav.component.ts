@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -9,13 +11,23 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
 
   constructor(
-    public router: Router
+    public router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {  }
 
   ngOnInit() {
   }
 
+  logado() {
+    return !this.authService.logado();
+  }
 
+  sair() {
+    localStorage.removeItem('token');
+    this.toastr.show('Deslogado');
+    this.router.navigate(['/login']);
+  }
   abrirMenu() {
     document.getElementById('mySidenav').style.width = '173px';
   }
