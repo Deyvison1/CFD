@@ -22,6 +22,10 @@ export class DividaService {
   getValoresPainel(id: number) {
     return this.http.get(`${this.baseURLValores}${id}`);
   }
+  // Listar Ultimos Por Id
+  getLastDividaById(id: number): Observable<Divida[]> {
+    return this.http.get<Divida[]>(`${this.baseURL}/dividaLastById/${id}`);
+  }
   // Listar Ultimos
   getLastDivida(): Observable<Divida[]> {
     return this.http.get<Divida[]>(`${this.baseURL}/dividaLast`);

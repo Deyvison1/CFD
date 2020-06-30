@@ -159,7 +159,7 @@ export class DividaComponent implements OnInit {
       if (this.metodoSalvar === 'post') {
         this.divida = Object.assign({  }, this.form.value);
 
-        this.divida.userId = 1;
+        this.divida.userId = this.idUser();
         this.divida.situacao = 0;
         this.divida.valorParcela = this.divida.valorTotal / this.divida.parcela;
 
@@ -200,7 +200,7 @@ export class DividaComponent implements OnInit {
     }
   }
   getValoresPainel() {
-    return this.dividaService.getValoresPainel(this.id).subscribe(
+    return this.dividaService.getValoresPainel(this.idUser()).subscribe(
       (data: ValoresDividaAndRenda) => {
         this.valorespainel = data;
       }, error => {
@@ -210,23 +210,59 @@ export class DividaComponent implements OnInit {
   }
 
   getUltimasDividas() {
-    return this.dividaService.getLastDivida().subscribe(
-      (data: Divida[]) => {
-        this.dividaLast = data;
-      }, error => {
-        console.log(`Erro no listar ultimos. CODE: ${error}`);
-      }
-    );
+    if (this.papel() === 1) {
+      return this.dividaService.getLastDivida().subscribe(
+        (data: Divida[]) => {
+          this.dividaLast = data;
+        }, error => {
+          this.toastr.error(`Erro ao listar ultimas dividas. CODE: ${error}`);
+        }
+      );
+    } else if (this.papel() === 2) {
+      return this.dividaService.getLastDividaById(this.idUser()).subscribe(
+        (data: Divida[]) => {
+          this.dividaLast = data;
+        }, error => {
+          this.toastr.error(`Erro ao listar ultimas dividas Por Id. CODE: ${error}`);
+        }
+      );
+    }
+  }
+
+  papel() {
+    return +sessionStorage.getItem('nivelUsuario');
+  }
+  idUser() {
+    return +sessionStorage.getItem('id');
   }
 
   getAll() {
-    return this.dividaService.getAll().subscribe(
-      (data: Divida[]) => {
-        this.dividas = data;
-        this.dividasFiltradas = this.dividas;
-      }, error => {
-        console.log(`Erro no listar todos. CODE: ${error}`);
-      }
-    );
+    this.loading = true;
+    if (this.papel() === 1) {
+      return this.dividaService.getAll().subscribe(
+        (data: Divida[]) => {
+          this.dividas = data;
+          this.dividasFiltradas = this.dividas;
+          this.getUltimasDividas();
+          this.getValoresPainel();
+          this.loading = false;
+        }, error => {
+          this.toastr.error(`Erro ao listar Todos. CODE: ${error}`);
+        }
+      );
+    } else if (this.papel() === 2) {
+      return this.dividaService.getAllDividaByUserId(this.idUser()).subscribe(
+        (data: Divida[]) => {
+          this.dividas = data;
+          this.dividasFiltradas = this.dividas;
+          this.getUltimasDividas();
+          this.getValoresPainel();
+          console.log(this.dividas);
+          this.loading = false;
+        }, error => {
+          this.toastr.error(`Erro ao listar Todos. CODE: ${error}`);
+        }
+      );
+    }
   }
 }

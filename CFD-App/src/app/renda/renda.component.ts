@@ -130,7 +130,7 @@ export class RendaComponent implements OnInit {
       if (this.metodoSalvar === 'post') {
         this.renda = Object.assign({ }, this.form.value);
 
-        this.renda.userId = 1;
+        this.renda.userId = this.idUser();
         this.rendaService.post(this.renda).subscribe(
           (data: Renda) => {
             dados.hide();
@@ -163,21 +163,37 @@ export class RendaComponent implements OnInit {
       }
     }
   }
+  papel() {
+    return +sessionStorage.getItem('nivelUsuario');
+  }
+  idUser() {
+    return +sessionStorage.getItem('id');
+  }
 
   getUltimasRendasAdd() {
     this.loading = true;
+    if (this.papel() === 1) {
     return this.rendaService.getLastRendaAdd().subscribe(
       (data: Renda[]) => {
         this.rendasLast = data;
-        console.log(data);
         this.loading = false;
       }, error => {
-        console.log(`Erro no listar ultimas.CODE: ${error}`);
+        this.toastr.error(`Erro ao listar ultimas. CODE: ${error}`);
       }
     );
+    } else if (this.papel() === 2) {
+      return this.rendaService.getLastRendaAddById(this.idUser()).subscribe(
+        (data: Renda[]) => {
+          this.rendasLast = data;
+          this.loading = false;
+        }, error => {
+          this.toastr.error(`Erro ao listar ultimas por id. CODE: ${error}`);
+        }
+      );
+    }
   }
   getValoresPainel() {
-    return this.rendaService.getPainelValores(this.id).subscribe(
+    return this.rendaService.getPainelValores(this.idUser()).subscribe(
       (data: ValoresDividaAndRenda) => {
         this.valorespainel = data;
         console.log(data);
@@ -188,16 +204,27 @@ export class RendaComponent implements OnInit {
   }
   getAll() {
     this.loading = true;
+    if (this.papel() === 1) {
     return this.rendaService.getAllRenda().subscribe(
       (data: Renda[]) => {
         this.rendas = data;
         this.rendasFiltradas = this.rendas;
-        console.log(data);
         this.loading = false;
       }, error => {
-        console.log(`Erro ao listar todas. CODE: ${error}`);
+        this.toastr.error(`Erro ao listar todas. CODE: ${error}`);
       }
     );
+    } else if (this.papel() === 2) {
+      return this.rendaService.getAllRendaByUserId(this.idUser()).subscribe(
+        (data: Renda[]) => {
+          this.rendas = data;
+          this.rendasFiltradas = this.rendas;
+          this.loading = false;
+        }, error => {
+          this.toastr.error(`Erro ao listar todas por id. CODE: ${error}`);
+        }
+      );
+    }
   }
 
 }

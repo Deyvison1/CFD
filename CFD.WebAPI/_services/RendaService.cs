@@ -25,6 +25,26 @@ namespace CFD.WebAPI._services
                 throw new ArgumentException($"RENDA: Erro ao listar por UserId. CODE: {e.Message}");
             }
         }
+        // Listar Ultimos Adicionados Por Id
+        public async Task<RendaDto[]> GetUltimosRendaAddById(int id) 
+        {
+            try
+            {
+                var todasRendas = await _repo.GetAllRendaByUserId(id);
+
+                var lastRendasAdd = todasRendas.OrderByDescending(
+                    x => x.Id
+                ).Take(3);
+
+                var lastRendaDto = _map.Map<RendaDto[]>(lastRendasAdd);
+
+                return lastRendaDto.ToArray();
+            }
+            catch(System.Exception e)
+            {
+                throw new ArgumentException($"RENDA: Erro ao listar ultimos. CODE: {e.Message}");
+            }
+        }
         // Listar Ultimos Adicionados
         public async Task<RendaDto[]> GetUltimosRendaAdd() 
         {
@@ -45,7 +65,7 @@ namespace CFD.WebAPI._services
                 throw new ArgumentException($"RENDA: Erro ao listar ultimos. CODE: {e.Message}");
             }
         }
-        // Listar Todos por Renda
+        // Listar Todos por Renda PAGE
         public async Task<RendaDto[]> GetAllRendapPage(int page) 
         {
             try {
@@ -56,6 +76,22 @@ namespace CFD.WebAPI._services
                 return result.ToArray();
             }catch(System.Exception e) {
                 throw new ArgumentException($"RENDA: Erro ao listar todos por paginacao. CODE: {e.Message}");
+            }
+        }
+        // LISTAR TODOS POR ID
+        public async Task<RendaDto[]> GetAllRendabById(int id)
+        {
+            try
+            {
+                var renda = await _repo.GetAllRendaByUserId(id);
+
+                var result = _map.Map<RendaDto[]>(renda);
+
+                return result.ToArray();
+
+            } catch(System.Exception e)
+            {
+                throw new ArgumentException($"Renda: Erro ao listar todos. CODE: {e.Message}");
             }
         }
         // Listar todos

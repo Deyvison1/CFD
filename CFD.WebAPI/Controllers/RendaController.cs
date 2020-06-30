@@ -18,11 +18,11 @@ namespace CFD.WebAPI.Controllers
         private readonly RendaService _rendaService;
         public RendaController(RendaService rendaService) { _rendaService = rendaService; }
         // Listar Por UserId
-        [HttpGet("detalhes/{id}")]
-        public async Task<IActionResult> GetAllRendaByUserId(int id) 
+        [HttpGet("lastRendasByUser/{id}")]
+        public async Task<IActionResult> GetLastRendaById(int id) 
         {
             try {
-                var rendaByUserId = await _rendaService.GetAllRendaByUserId(id);
+                var rendaByUserId = await _rendaService.GetUltimosRendaAddById(id);
 
                 return Ok(rendaByUserId);
 
@@ -41,6 +41,21 @@ namespace CFD.WebAPI.Controllers
 
             }catch(System.Exception e){
                 throw new ArgumentException($"RENDA: Erro ao listar todos por paginacao. CODE: {e.Message}");
+            }
+        }
+        // Listar Todos Por Id
+        [HttpGet("rendasByUser/{id}")]
+        public async Task<IActionResult> GetAllRendaById(int id)
+        {
+            try
+            {
+                var renda = await _rendaService.GetAllRendaByUserId(id);
+
+                return Ok(renda);
+            }
+            catch (System.Exception e)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"RENDA: Erro no Lista Todos. CODE: {e.Message}");
             }
         }
         // Listar Todos

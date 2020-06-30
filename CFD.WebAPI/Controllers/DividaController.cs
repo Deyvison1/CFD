@@ -41,6 +41,18 @@ namespace CFD.WebAPI.Controllers
                 throw new ArgumentException($"DIVIDA: Erro ao listar por UserId. CODE: {e.Message}");
             }
         }
+        // Listar Ultimas Dividas Por Id
+        [HttpGet("dividaLastById/{id}")]
+        public async Task<IActionResult> GetUltimasDividasAddById(int id) 
+        {
+            try {
+                var dividas = await _dividaService.GetUltimasDividasAddById(id);
+
+                return Ok(dividas);
+            }catch(System.Exception e) {
+                throw new ArgumentException($"DIVIDA: Erro ao listar ultimas. CODE: {e.Message}");
+            }
+        }
         // Listar Ultimas Dividas
         [HttpGet("dividaLast")]
         public async Task<IActionResult> GetUltimasDividasAdd() 

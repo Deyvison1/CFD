@@ -200,11 +200,10 @@ namespace CFD.WebAPI._services
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Nome),
                 new Claim(ClaimTypes.Role, user.Papel.ToString())
             };
-
             var key = new SymmetricSecurityKey(
                     Encoding.ASCII.GetBytes(_config
                         .GetSection("AppSettings:Token").Value));

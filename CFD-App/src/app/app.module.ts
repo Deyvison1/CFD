@@ -14,7 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DividaComponent } from './divida/divida.component';
 import { RendaComponent } from './renda/renda.component';
 import { NavComponent } from './nav/nav.component';
@@ -22,6 +22,7 @@ import { UserService } from './_services/user.service';
 import { FooterComponent } from './footer/footer.component';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,11 @@ import { LoginComponent } from './login/login.component';
     })
   ],
   providers: [
-    UserService
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

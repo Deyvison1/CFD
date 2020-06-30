@@ -30,6 +30,23 @@ namespace CFD.WebAPI._services
                 throw new ArgumentNullException($"DIVIDA: Erro ao listar por userId. CODE: {e.Message}");
             }
         }
+        // Listar Ultimas Dividas Por Id
+        public async Task<DividaDto[]> GetUltimasDividasAddById(int id)
+        {
+            try {
+                var todasDividas = await _repo.GetAllDividaByUserId(id);
+
+                var ultimasDividas = todasDividas.OrderByDescending(
+                    x => x.Id
+                ).Take(3);
+                
+                var dividasDto = _map.Map<DividaDto[]>(ultimasDividas);
+                
+                return dividasDto.ToArray();
+            }catch(System.Exception e) {
+                throw new ArgumentException($"DIVIDA: Erro ao listar ultimas. CODE: {e.Message}");
+            }
+        }
         // Listar Ultimas Dividas
         public async Task<DividaDto[]> GetUltimasDividasAdd ()
         {
@@ -47,7 +64,6 @@ namespace CFD.WebAPI._services
                 throw new ArgumentException($"DIVIDA: Erro ao listar ultimas. CODE: {e.Message}");
             }
         }
-
         // Listar Todos Por Paginacao
         public async Task<DividaDto[]> GetAllDividaPage(int page)
         {

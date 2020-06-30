@@ -15,11 +15,15 @@ export class RendaService {
 
   // Listar Por UserId
   getAllRendaByUserId(id: number): Observable<Renda[]> {
-    return this.http.get<Renda[]>(`${this.baseURL}/detalhes/${id}`);
+    return this.http.get<Renda[]>(`${this.baseURL}/rendasByUser/${id}`);
   }
   // Valores do Painel
   getPainelValores(id: number) {
     return this.http.get(`${this.baseURLValores}${id}`);
+  }
+  // // Listar Ultimas Rendas Adicionadas Por Id
+  getLastRendaAddById(id: number): Observable<Renda[]> {
+    return this.http.get<Renda[]>(`${this.baseURL}/lastRendasByUser/${id}`);
   }
   // Listar Ultimas Rendas Adicionadas
   getLastRendaAdd(): Observable<Renda[]> {
